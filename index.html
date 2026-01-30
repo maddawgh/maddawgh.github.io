@@ -1,42 +1,299 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immersive Timeline Magazine Layout</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Jayanth Gowda | Medical Device Engineer</title>
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --card-bg: rgba(30, 41, 59, 0.6);
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-primary); overflow-x: hidden; }
+
+        /* --- HERO SECTION --- */
+        header {
+            min-height: 90vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b1120 100%); padding: 20px;
+        }
+
+        .profile-container {
+            width: 170px; height: 170px; border-radius: 50%; padding: 4px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4); margin-bottom: 30px;
+        }
+        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-color); }
+        
+        h1 { font-size: 3.5rem; margin-bottom: 15px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; }
+        .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; line-height: 1.6; }
+
+        /* --- MAGAZINE TIMELINE LAYOUT --- */
+        .timeline-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        
+        /* The Center Line */
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: rgba(56, 189, 248, 0.3); transform: translateX(-50%); }
+
+        .timeline-row {
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 120px; position: relative;
+        }
+
+        /* NARRATIVE TEXT (The Story) */
+        .narrative-text {
+            width: 42%; padding: 0 50px;
+            font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary);
+            text-align: right;
+        }
+        
+        .narrative-highlight { color: var(--accent); font-weight: 600; }
+
+        /* THE CARD (The Headline & Action) */
+        .action-card {
+            width: 42%; padding: 35px;
+            background: var(--card-bg); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .action-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .card-category { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px; display: block; }
+        .card-title { font-size: 2rem; margin-bottom: 10px; color: #fff; }
+        .view-btn { font-size: 0.9rem; color: #fff; display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; margin-top: 15px;}
+
+        /* THE CENTER DOT */
+        .timeline-dot {
+            width: 20px; height: 20px; background: var(--bg-color); border: 3px solid var(--accent); border-radius: 50%;
+            position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 0 15px var(--accent); z-index: 2;
+        }
+
+        /* ALTERNATING SIDES */
+        .timeline-row.reverse { flex-direction: row-reverse; }
+        .timeline-row.reverse .narrative-text { text-align: left; }
+
+        /* --- OVERLAY SYSTEM --- */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 17, 32, 0.98); z-index: 100; display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s; }
+        .overlay.active { display: block; opacity: 1; }
+        .overlay-content { max-width: 900px; margin: 80px auto; padding: 40px 20px; animation: slideUp 0.5s ease; }
+        .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: var(--text-secondary); cursor: pointer; z-index: 101; }
+        
+        .detail-title { font-size: 2.5rem; margin-bottom: 5px; color: #fff; }
+        .detail-sub { font-size: 1.2rem; color: var(--accent); margin-bottom: 40px; display: block; }
+        .detail-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
+        
+        .metric-list li { margin-bottom: 20px; padding-left: 20px; border-left: 3px solid var(--accent); line-height: 1.6; font-size: 1.05rem; color: #e2e8f0; }
+
+        /* VISUAL PLACEHOLDER */
+        .visual-container { height: 350px; background: #1e293b; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); }
+        .visual-img { width: 100%; height: 100%; object-fit: cover; }
+
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .timeline-row, .timeline-row.reverse { flex-direction: column; align-items: flex-start; margin-left: 0; border-left: 2px solid rgba(56,189,248,0.3); padding-left: 25px; margin-bottom: 60px; }
+            .timeline-line, .timeline-dot { display: none; }
+            .narrative-text, .action-card { width: 100%; padding: 0; text-align: left; }
+            .narrative-text { margin-bottom: 25px; padding-right: 0; }
+            .detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
+
     <header>
-        <h1>Immersive Timeline Magazine</h1>
+        <div class="profile-container">
+            <img src="profile.jpg" alt="Jayanth Gowda" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+        <h1>Jayanth Gowda</h1>
+        <p class="hero-sub">
+            Graduate Mechanical Engineer focused on <span style="color:var(--accent)">Medical Device Design</span>.<br>
+            Bridging the gap between theoretical mechanics and FDA-compliant healthcare solutions[cite: 5, 12].
+        </p>
     </header>
-    <main>
-        <section id="step-1">
-            <h2>Step 1: Narrative Content</h2>
-            <p>Here you will detail the narrative content relevant to Step 1 of the immersive timeline.</p>
-        </section>
-        <section id="experience">
-            <h2>Reordered Experience</h2>
-            <ol>
-                <li>Lab Assistant</li>
-                <li>TD</li>
-                <li>Toyota</li>
-            </ol>
-        </section>
-        <section id="education-flow">
-            <h2>Updated Education Flow</h2>
-            <p>The flow of education has been updated to reflect the current structure.</p>
-        </section>
-        <section id="overlay-modals">
-            <h2>Overlay Modals</h2>
-            <div class="modal">
-                <h3>Technical Details</h3>
-                <p>Here you can provide technical details that are necessary for the viewers to understand the immersive timeline.</p>
+
+    <div class="timeline-section">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-row">
+            <div class="narrative-text">
+                My journey didn't start in a lab; it started in a hospital. Watching a CT Scanner in operation, I realized that modern surgery relies entirely on <span class="narrative-highlight">mechanical precision</span>. That fascination drove me to pivot from general engineering to Medical Devices.
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Immersive Timeline Magazine</p>
-    </footer>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-spark')">
+                <span class="card-category">THE ORIGIN</span>
+                <h3 class="card-title">The Spark</h3>
+                <div class="view-btn">Read the Inspiration →</div>
+            </div>
+        </div>
+
+        <div class="timeline-row reverse">
+            <div class="narrative-text">
+                At Toyota, I learned that quality isn't an accident. By applying <span class="narrative-highlight">Root Cause Analysis (RCA)</span> and SPC tools, I helped reduce recurring defects by 15% on a high-volume assembly line[cite: 31].
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-toyota')">
+                <span class="card-category">INTERNSHIP</span>
+                <h3 class="card-title">Toyota Kirloskar</h3>
+                <div class="view-btn">See Quality Metrics →</div>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="narrative-text">
+                Engineering isn't finished until it works on the shop floor. My work improving heat-exchanger efficiency by 8% taught me the critical link between <span class="narrative-highlight">CAD theory and manufacturing reality</span>[cite: 24, 25].
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-td')">
+                <span class="card-category">PROFESSIONAL EXPERIENCE</span>
+                <h3 class="card-title">TD Power Systems</h3>
+                <div class="view-btn">View Engineering Impact →</div>
+            </div>
+        </div>
+
+        <div class="timeline-row reverse">
+            <div class="narrative-text">
+                To build the best, I had to master the regulations. My Masters focused on <span class="narrative-highlight">FDA 21 CFR 820</span>, ISO 13485, and managing 15+ robotics systems as a Lab Lead[cite: 12, 18].
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-stevens')">
+                <span class="card-category">EDUCATION & LEADERSHIP</span>
+                <h3 class="card-title">Masters at Stevens</h3>
+                <div class="view-btn">View Coursework & Lab Work →</div>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="narrative-text">
+                Innovation requires optimization. I optimized 3D printing parameters for an <span class="narrative-highlight">Exoskeleton</span>, reducing print time by 20% while increasing structural integrity for patient rehabilitation[cite: 36].
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-projects')">
+                <span class="card-category">ACADEMIC INNOVATION</span>
+                <h3 class="card-title">Exoskeleton Design</h3>
+                <div class="view-btn">View 3D Projects →</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="overlay-spark" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-spark')">×</div>
+        <div class="overlay-content">
+            <h2 class="detail-title">The Realization</h2>
+            <span class="detail-sub">The pivot to Medical Technology</span>
+            <div class="detail-grid">
+                <div>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #cbd5e1;">
+                        During my undergraduate studies, I explored various mechanical fields. However, seeing the intricate mechanical systems inside a <strong>CT Scanner</strong> and surgical robots changed my perspective.
+                        <br><br>
+                        I realized that healthcare solutions require a unique blend of <strong>mechanical robustness</strong> and <strong>regulatory compliance</strong>. This drove me to pursue my Masters at Stevens, focusing specifically on Medical Device Design and Manufacturing.
+                    </p>
+                </div>
+                <div class="visual-container">
+                    <img src="https://via.placeholder.com/400x300?text=Medical+Imaging+Tech" class="visual-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-toyota" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-toyota')">×</div>
+        <div class="overlay-content">
+            <h2 class="detail-title">Toyota Kirloskar Motors</h2>
+            <span class="detail-sub">Internship | Bengaluru, India [cite: 27-29]</span>
+            <div class="detail-grid">
+                <div>
+                    <ul class="metric-list">
+                        <li><strong>Root Cause Analysis (RCA):</strong> Utilized Fishbone diagrams and 5-Why analysis to identify the source of recurring process deviations[cite: 31].</li>
+                        <li><strong>Defect Reduction:</strong> Contributed to a 10-15% reduction in recurring defects using Statistical Process Control (SPC) tools[cite: 31].</li>
+                        <li><strong>Process Stabilization:</strong> Assisted technicians with issue identification and material handling improvements, boosting production flow by 10%[cite: 30, 32].</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <img src="https://via.placeholder.com/400x300?text=Assembly+Line+Analysis" class="visual-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-td" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-td')">×</div>
+        <div class="overlay-content">
+            <h2 class="detail-title">TD Power Systems</h2>
+            <span class="detail-sub">Graduate Engineer Trainee | Bengaluru, India [cite: 21-23]</span>
+            <div class="detail-grid">
+                <div>
+                    <ul class="metric-list">
+                        <li><strong>Efficiency Boost:</strong> Improved heat-exchanger cooling efficiency by ~8% through engineering calculations and CAD reviews[cite: 24].</li>
+                        <li><strong>Design Validation:</strong> Gained hands-on experience on the shop floor, reducing validation rework and bridging the gap between design and production[cite: 25].</li>
+                        <li><strong>Project Coordination:</strong> Assisted with customer-driven design changes, coordinating approvals and supplier communication for on-time testing[cite: 26].</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <img src="https://via.placeholder.com/400x300?text=Heat+Exchanger+CAD" class="visual-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-stevens" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-stevens')">×</div>
+        <div class="overlay-content">
+            <h2 class="detail-title">Stevens Institute of Technology</h2>
+            <span class="detail-sub">M.S. Mechanical Engineering (3.67 GPA) | Hoboken, NJ [cite: 4-6]</span>
+            
+            <div class="detail-grid">
+                <div>
+                    <h4 style="color:var(--accent); margin-bottom:15px;">Core Coursework</h4>
+                    <p style="margin-bottom:20px; color:#cbd5e1;">Medical Device Design & Technology, Design for Manufacturability, Quality in Life Sciences (ISO 13485)[cite: 7].</p>
+                    
+                    <h4 style="color:var(--accent); margin-bottom:15px;">Lab Leadership Experience</h4>
+                    <ul class="metric-list">
+                        <li><strong>Equipment Management:</strong> Supported 15+ electromechanical, robotics, and thermal lab systems, improving uptime by 20%[cite: 18].</li>
+                        <li><strong>Fixture Design:</strong> Designed and 3D printed custom jigs using FDM to simplify lab setups, reducing prep time by 30-40%[cite: 20].</li>
+                        <li><strong>Safety Compliance:</strong> Guided 40+ students per semester, leading to a 30% reduction in setup errors[cite: 19].</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <img src="https://via.placeholder.com/400x300?text=Stevens+Lab+Setup" class="visual-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-projects" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-projects')">×</div>
+        <div class="overlay-content">
+            <h2 class="detail-title">Exoskeleton Design Optimization</h2>
+            <span class="detail-sub">Academic Project | Stevens Institute [cite: 34-35]</span>
+            <div class="detail-grid">
+                <div>
+                    <ul class="metric-list">
+                        <li><strong>Additive Manufacturing:</strong> Optimized the 3D printing process using PLA Carbon Fiber by refining print parameters and orientation[cite: 36].</li>
+                        <li><strong>Performance Metrics:</strong> Reduced print time by 20% while improving print quality and structural integrity[cite: 36].</li>
+                        <li><strong>Design for Assembly:</strong> Redesigned joints and interfaces, reducing assembly effort and rework by 30%[cite: 37].</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <img src="https://via.placeholder.com/400x300?text=Exoskeleton+Prototype" class="visual-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openOverlay(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeOverlay(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+    </script>
 </body>
 </html>
