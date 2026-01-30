@@ -7,41 +7,65 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Step 1: Hero Headline</h1>
-        <h2>Subheadline goes here</h2>
+
+    <header class="hero">
+        <h1>Mechanical Engineer & Medical Device Designer</h1>
+        <h2>Innovating solutions for a better healthcare experience</h2>
     </header>
-    <main>
-        <section>
-            <h3>Story Intro</h3>
-            <p>This is the updated story intro that captivates the reader’s attention.</p>
-        </section>
-        <section>
-            <h3>Experience</h3>
-            <div class="card">
-                <h4>Lab Assistant</h4>
-                <p>Description of the experience as a Lab Assistant.</p>
+
+    <main class="timeline">
+        <div class="timeline-row">
+            <div class="narrative">
+                <h3>Story Intro</h3>
+                <p>Your journey into the world of mechanical engineering and medical devices.</p>
             </div>
-            <div class="card">
-                <h4>Technical Director (TD)</h4>
-                <p>Description of the experience as a Technical Director.</p>
+            <div class="action-card">
+                <button onclick="openModal('storyIntroModal')">Details</button>
+                <div id="storyIntroModal" class="modal">
+                    <!-- Detailed content for Story Intro -->
+                </div>
             </div>
-            <div class="card">
-                <h4>Toyota</h4>
-                <p>Description of the experience while working at Toyota.</p>
+        </div>
+        <div class="timeline-row">
+            <div class="narrative">
+                <h3>Lab Assistant</h3>
+                <p>Your experience as a Lab Assistant, where you developed your foundational skills.</p>
             </div>
-        </section>
-        <section>
-            <h3>Education</h3>
-            <p>Narrative about the education flow and experiences.</p>
-        </section>
-        <section>
-            <h3>Project Overlays</h3>
-            <p>Details of project overlays ready for Step 2 visual enhancements.</p>
-        </section>
+            <div class="action-card">
+                <button onclick="openModal('labAssistantModal')">Details</button>
+                <div id="labAssistantModal" class="modal">
+                    <!-- Detailed content for Lab Assistant experience -->
+                </div>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="narrative">
+                <h3>TD Power Systems</h3>
+                <p>Details about your experience at TD Power Systems.</p>
+            </div>
+            <div class="action-card">
+                <button onclick="openModal('tdPowerSystemsModal')">Details</button>
+                <div id="tdPowerSystemsModal" class="modal">
+                    <!-- Detailed content for TD Power Systems experience -->
+                </div>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="narrative">
+                <h3>Toyota Internship</h3>
+                <p>Your transformative internship experience at Toyota.</p>
+            </div>
+            <div class="action-card">
+                <button onclick="openModal('toyotaModal')">Details</button>
+                <div id="toyotaModal" class="modal">
+                    <!-- Detailed content for Toyota internship -->
+                </div>
+            </div>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2026 Immersive Timeline Magazine</p>
-    </footer>
+
+    <button onclick="toggleEditMode()">Toggle Edit Mode</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
