@@ -1,9 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jayanth Gowda | Medical Device Engineer</title>
+    <title>Jayanth Gowda | Mechanical Engineer | Medical Device Design</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -11,10 +11,31 @@
             --text-secondary: #94a3b8;
             --accent: #38bdf8;
             --card-bg: rgba(30, 41, 59, 0.6);
+            --success: #22c55e;
         }
         
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-us, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-primary); overflow-x: hidden; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 0 20px;
+        }
+        
+        nav ul {
+            list-style: none; display: flex; justify-content: center; gap: 40px;
+            max-width: 1200px; margin: 0 auto; padding: 15px 0;
+        }
+        
+        nav a {
+            color: var(--text-secondary); text-decoration: none; font-size: 0.95rem;
+            transition: color 0.3s; border-bottom: 2px solid transparent; padding-bottom: 5px;
+        }
+        
+        nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
         /* --- HERO --- */
         header {
@@ -31,228 +52,410 @@
         .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-color); }
         
         h1 { font-size: 3.5rem; margin-bottom: 15px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; }
-        .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; line-height: 1.6; }
+        .hero-headline { font-size: 2rem; color: var(--accent); margin-bottom: 20px; font-weight: 600; }
+        .hero-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; line-height: 1.7; margin-bottom: 30px; }
 
-        /* --- MAGAZINE TIMELINE LAYOUT --- */
-        .timeline-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        /* --- CTA BUTTONS (Hero) --- */
+        .hero-cta {
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+        }
         
-        /* The Center Line */
-        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: rgba(56, 189, 248, 0.3); transform: translateX(-50%); }
-
-        .timeline-row {
-            display: flex; justify-content: center; align-items: center;
-            margin-bottom: 100px; position: relative;
+        .cta-btn {
+            padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: 600;
+            transition: all 0.3s; cursor: pointer; border: none; font-size: 0.95rem;
         }
+        
+        .cta-btn.primary { background: var(--accent); color: #000; }
+        .cta-btn.primary:hover { background: #0ea5e9; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); }
+        
+        .cta-btn.secondary { border: 2px solid var(--accent); color: var(--accent); background: transparent; }
+        .cta-btn.secondary:hover { background: rgba(56, 189, 248, 0.1); }
 
-        /* NARRATIVE TEXT (The Story) */
-        .narrative-text {
-            width: 40%; padding: 0 40px;
-            font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);
-            text-align: right;
+        /* --- SKILLS SECTION --- */
+        .skills-section {
+            padding: 60px 20px; max-width: 1000px; margin: 0 auto;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 12px;
+            margin-top: 40px;
         }
-
-        /* THE CARD (The Headline & Action) */
-        .action-card {
-            width: 40%; padding: 30px;
-            background: var(--card-bg); border-radius: 12px;
+        
+        .skills-title { font-size: 1.5rem; color: var(--accent); margin-bottom: 30px; text-align: center; }
+        
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
+        }
+        
+        .skill-card {
+            background: var(--card-bg); padding: 25px; border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, border-color 0.3s;
-            cursor: pointer;
-            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
         }
         
-        .action-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .skill-card:hover { transform: translateY(-5px); border-color: var(--accent); }
         
-        .card-category { color: var(--accent); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; display: block; }
-        .card-title { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
-        .view-btn { font-size: 0.9rem; color: #fff; display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+        .skill-card h4 { color: var(--accent); margin-bottom: 12px; font-size: 1.1rem; }
+        .skill-card ul { list-style: none; padding-left: 0; }
+        .skill-card li { color: var(--text-secondary); margin-bottom: 8px; padding-left: 20px; position: relative; }
+        .skill-card li:before { content: "→"; position: absolute; left: 0; color: var(--accent); }
 
-        /* THE CENTER DOT */
-        .timeline-dot {
-            width: 16px; height: 16px; background: var(--bg-color); border: 2px solid var(--accent); border-radius: 50%;
-            position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 0 10px var(--accent); z-index: 2;
+        /* --- STORY SECTION --- */
+        .story-section {
+            padding: 80px 20px; max-width: 1000px; margin: 0 auto;
+        }
+        
+        .story-section h2 { font-size: 2.2rem; margin-bottom: 30px; color: var(--accent); }
+        
+        .story-text {
+            font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary);
+            margin-bottom: 20px; text-align: justify;
         }
 
-        /* ALTERNATING SIDES */
-        .timeline-row.reverse { flex-direction: row-reverse; }
-        .timeline-row.reverse .narrative-text { text-align: left; }
+        /* --- EDUCATION SECTION (Timeline) --- */
+        .education-section {
+            padding: 80px 20px; max-width: 1000px; margin: 0 auto;
+        }
+        
+        .education-section h2 { font-size: 2.2rem; margin-bottom: 50px; color: var(--accent); }
+        
+        .edu-item {
+            position: relative; margin-bottom: 50px; padding-left: 40px;
+            border-left: 2px solid rgba(56, 189, 248, 0.3);
+        }
+        
+        .edu-item::before {
+            content: ""; position: absolute; left: -9px; top: 5px;
+            width: 16px; height: 16px; border-radius: 50%; background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        
+        .edu-item h3 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
+        .edu-item .edu-meta { color: var(--accent); font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; }
+        .edu-item p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 10px; }
 
-        /* --- OVERLAY SYSTEM --- */
+        /* --- EXPERIENCE SECTION (Now → Recent → Foundation) --- */
+        .experience-section {
+            padding: 80px 20px; max-width: 1000px; margin: 0 auto;
+        }
+        
+        .experience-section h2 { font-size: 2.2rem; margin-bottom: 50px; color: var(--accent); }
+        
+        .exp-category { font-size: 1.2rem; color: var(--accent); margin-top: 40px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .exp-item {
+            background: var(--card-bg); padding: 30px; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .exp-item:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        .exp-item h3 { font-size: 1.4rem; color: #fff; margin-bottom: 8px; }
+        .exp-item .exp-meta { color: var(--accent); font-size: 0.9rem; margin-bottom: 15px; }
+        .exp-item p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
+        .exp-item ul { list-style: none; padding-left: 0; }
+        .exp-item li { color: var(--text-secondary); margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .exp-item li:before { content: "✓"; position: absolute; left: 0; color: var(--success); }
+
+        /* --- FEATURED PROJECTS --- */
+        .projects-preview {
+            padding: 60px 20px; max-width: 1000px; margin: 0 auto;
+            text-align: center;
+        }
+        
+        .projects-preview h2 { font-size: 1.8rem; margin-bottom: 40px; color: var(--accent); }
+        
+        .project-tiles {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;
+        }
+        
+        .project-tile {
+            background: var(--card-bg); padding: 25px; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer;
+        }
+        
+        .project-tile:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2); }
+        
+        .project-tile h3 { color: #fff; margin-bottom: 12px; font-size: 1.2rem; }
+        .project-tile p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+        }
+        
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* --- OVERLAY SYSTEM (for future modal details) --- */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 17, 32, 0.98); z-index: 100; display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s; }
         .overlay.active { display: block; opacity: 1; }
         .overlay-content { max-width: 900px; margin: 80px auto; padding: 40px 20px; animation: slideUp 0.5s ease; }
         .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: var(--text-secondary); cursor: pointer; z-index: 101; }
         
-        .detail-title { font-size: 2.5rem; margin-bottom: 10px; }
-        .detail-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 40px; }
-        .visual-container { height: 300px; background: #1e293b; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); }
-        .metric-list li { margin-bottom: 15px; padding-left: 20px; border-left: 3px solid var(--accent); line-height: 1.6; }
-
         @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         /* EDIT MODE BUTTON */
-        .edit-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: #000; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; z-index: 200; box-shadow: 0 0 20px rgba(56,189,248,0.5); }
+        .edit-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--accent); color: #000; padding: 10px 20px;
+            border-radius: 30px; cursor: pointer; font-weight: bold; z-index: 200;
+            border: none; transition: all 0.3s;
+        }
+        
+        .edit-toggle:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4); }
 
         /* MOBILE */
         @media (max-width: 768px) {
-            .timeline-row, .timeline-row.reverse { flex-direction: column; align-items: flex-start; margin-left: 20px; border-left: 2px solid rgba(56,189,248,0.3); padding-left: 30px; margin-bottom: 60px; }
-            .timeline-line, .timeline-dot { display: none; } /* Hide line on mobile for cleaner look */
-            .narrative-text, .action-card { width: 100%; padding: 0; text-align: left; }
-            .narrative-text { margin-bottom: 20px; padding-right: 10px; }
+            h1 { font-size: 2.5rem; }
+            .hero-headline { font-size: 1.3rem; }
+            nav ul { flex-direction: column; gap: 15px; padding: 20px 0; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .cta-btn { width: 100%; max-width: 300px; }
+            .edu-item, .exp-item { padding-left: 25px; }
+            .education-section h2, .story-section h2, .experience-section h2 { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <!-- NAVIGATION -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#specialization" class="nav-link">Specialization</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO HEADER -->
+    <header id="home">
         <div class="profile-container">
             <img src="profile.jpg" alt="Profile" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
+        <p class="hero-headline editable">Mechanical Engineer (M.S.) | Medical Device Design & Manufacturing</p>
         <p class="hero-sub editable">
-            Graduate Mechanical Engineer specializing in <strong>Medical Device Design</strong>.<br>
-            Bridging the gap between theoretical mechanics and FDA-compliant healthcare solutions.
+            I build mechanical solutions that are manufacturable, testable, and reliable—especially in healthcare and lab-grade systems.
         </p>
+        
+        <div class="hero-cta">
+            <button class="cta-btn primary" onclick="scrollToSection('specialization')">View Specialization</button>
+            <button class="cta-btn secondary" onclick="scrollToSection('experience')">Experience</button>
+            <button class="cta-btn secondary" onclick="scrollToSection('projects')">Projects</button>
+            <a href="resume.pdf" class="cta-btn secondary">Resume</a>
+        </div>
     </header>
 
-    <div class="timeline-section">
-        <div class="timeline-line"></div>
+    <!-- STORY SECTION -->
+    <section class="story-section">
+        <h2 class="editable">My Journey</h2>
+        
+        <p class="story-text editable">
+            I started in science because I wanted to understand how things work at a fundamental level—then chose mechanical engineering because it turns that curiosity into real systems you can design, build, and validate. During my first CT and MRI scan, I became fascinated by how precisely engineered machines and instruments enable diagnosis and surgery. That moment made healthcare engineering feel tangible—not abstract.
+        </p>
 
-        <div class="timeline-row">
-            <div class="narrative-text editable">
-                It wasn't a classroom that defined my career—it was a hospital visit. Watching a CT Scanner in operation, I realized that modern surgery relies entirely on mechanical precision. That fascination drove me to pivot from general engineering to Medical Devices.
-            </div>
-            <div class="timeline-dot"></div>
-            <div class="action-card" onclick="openOverlay('overlay-spark')">
-                <span class="card-category">THE ORIGIN</span>
-                <h3 class="card-title editable">The Spark</h3>
-                <div class="view-btn">Read the Full Story →</div>
-            </div>
-        </div>
+        <p class="story-text editable">
+            At Stevens, I focused that interest into medical device design, manufacturability, and quality systems, while working hands-on in lab environments supporting electromechanical equipment, prototyping fixtures, and improving setup reliability. Today I'm building toward roles in mechanical design, manufacturing engineering, quality/reliability, and areas adjacent to molecular imaging hardware, where rigorous engineering and real-world impact meet.
+        </p>
 
-        <div class="timeline-row reverse">
-            <div class="narrative-text editable">
-                At Toyota, I learned that quality isn't an accident. By applying Root Cause Analysis (RCA) and SPC tools, I helped reduce recurring defects by 15% on a high-volume assembly line.
-            </div>
-            <div class="timeline-dot"></div>
-            <div class="action-card" onclick="openOverlay('overlay-toyota')">
-                <span class="card-category">INTERNSHIP</span>
-                <h3 class="card-title editable">Toyota Kirloskar</h3>
-                <div class="view-btn">See Metrics & Impact →</div>
-            </div>
-        </div>
-
-        <div class="timeline-row">
-            <div class="narrative-text editable">
-                Engineering isn't finished until it works on the shop floor. My work improving heat-exchanger efficiency by 8% taught me the critical link between CAD theory and manufacturing reality.
-            </div>
-            <div class="timeline-dot"></div>
-            <div class="action-card" onclick="openOverlay('overlay-td')">
-                <span class="card-category">EXPERIENCE</span>
-                <h3 class="card-title editable">TD Power Systems</h3>
-                <div class="view-btn">View Projects →</div>
-            </div>
-        </div>
-
-        <div class="timeline-row reverse">
-            <div class="narrative-text editable">
-                To build the best, I had to learn the regulations. My Masters at Stevens focused on FDA 21 CFR 820, ISO 13485, and advanced Biomechanics to ensure my designs are compliant and safe.
-            </div>
-            <div class="timeline-dot"></div>
-            <div class="action-card" onclick="openOverlay('overlay-masters')">
-                <span class="card-category">EDUCATION</span>
-                <h3 class="card-title editable">Masters at Stevens</h3>
-                <div class="view-btn">View Coursework →</div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="overlay-spark" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-spark')">×</div>
-        <div class="overlay-content">
-            <h2 class="detail-title editable">The Realization</h2>
-            <div class="detail-grid">
-                <div class="editable">
-                    <p>My journey began with a curiosity for science, but the defining moment was seeing a <strong>CT Scanner</strong> in operation.</p><br>
-                    <p>I realized that the tools saving lives are mechanical marvels. I decided then to pivot my career to focus specifically on <strong>Medical Device Design</strong> and molecular imaging technologies.</p>
-                </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=CT+Scanner+Inspiration" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="overlay-toyota" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-toyota')">×</div>
-        <div class="overlay-content">
-            <h2 class="detail-title editable">Toyota Kirloskar Motors</h2>
-            <h3 class="editable" style="color:var(--accent)">Internship | Bengaluru, India</h3>
-            <div class="detail-grid">
-                <div>
-                    <ul class="metric-list editable">
-                        [cite_start]<li><strong>Defect Reduction:</strong> Used SPC tools and RCA to reduce recurring line defects by 10-15%[cite: 31].</li>
-                        [cite_start]<li><strong>Process Stabilization:</strong> Assisted technicians with issue identification, contributing to smoother assembly operations[cite: 30].</li>
-                        [cite_start]<li><strong>Safety & Ergonomics:</strong> Helped improve operator safety and production flow by 10% through material handling improvements[cite: 32].</li>
+        <!-- WHAT I WORK ON -->
+        <div class="skills-section">
+            <h3 class="skills-title">What I Work On</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h4>🖥️ Mechanical Design & CAD</h4>
+                    <ul>
+                        <li>SolidWorks 3D modeling</li>
+                        <li>Engineering drawings & GD&T</li>
+                        <li>Tolerance thinking & stack-up analysis</li>
                     </ul>
                 </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=Assembly+Line+Analysis" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="overlay-td" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-td')">×</div>
-        <div class="overlay-content">
-            <h2 class="detail-title editable">TD Power Systems</h2>
-            <h3 class="editable" style="color:var(--accent)">Graduate Engineer Trainee</h3>
-            <div class="detail-grid">
-                <div>
-                    <ul class="metric-list editable">
-                        [cite_start]<li><strong>Efficiency Boost:</strong> Improved heat-exchanger cooling efficiency by ~8% through engineering calculations[cite: 24].</li>
-                        [cite_start]<li><strong>Design Validation:</strong> Worked on the shop floor to validate designs, reducing rework and improving cross-team coordination[cite: 25].</li>
-                        [cite_start]<li><strong>Supplier Communication:</strong> Managed customer-driven design changes and coordinated approvals for on-time testing[cite: 26].</li>
+                <div class="skill-card">
+                    <h4>🛠️ Prototyping & Fixtures</h4>
+                    <ul>
+                        <li>FDM/SLA 3D printing</li>
+                        <li>Jigs & mounts for repeatable setups</li>
+                        <li>Shop floor validation</li>
                     </ul>
                 </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=Heat+Exchanger+CAD" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="overlay-masters" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
-        <div class="overlay-content">
-            <h2 class="detail-title editable">Stevens Institute of Technology</h2>
-            <h3 class="editable" style="color:var(--accent)">M.S. Mechanical Engineering (3.67 GPA)</h3>
-            <div class="detail-grid">
-                <div>
-                    <h4 class="editable" style="margin-bottom:10px;">Core Competencies</h4>
-                    <ul class="metric-list editable">
-                        [cite_start]<li><strong>Medical Device Design:</strong> Comprehensive study of device lifecycle and user needs[cite: 7].</li>
-                        [cite_start]<li><strong>Quality Systems:</strong> Deep understanding of ISO 13485, FDA 21 CFR 820, CAPA, and 5-Why Analysis[cite: 12].</li>
-                        [cite_start]<li><strong>Lab Leadership:</strong> As Lab Assistant, I managed 15+ robotics systems and guided 40+ students per semester[cite: 18, 19].</li>
-                        [cite_start]<li><strong>Process Improvement:</strong> Designed custom 3D-printed jigs that reduced lab setup time by 30-40%[cite: 20].</li>
+                <div class="skill-card">
+                    <h4>✓ Test & Validation</h4>
+                    <ul>
+                        <li>Electromechanical systems support</li>
+                        <li>Documentation & troubleshooting</li>
+                        <li>Design verification</li>
                     </ul>
                 </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=Stevens+Institute" style="width:100%; height:100%; object-fit:cover;">
+
+                <div class="skill-card">
+                    <h4>📋 Quality & Improvement</h4>
+                    <ul>
+                        <li>ISO 13485, FDA 21 CFR 820 awareness</li>
+                        <li>CAPA/RCA, 5-Why, Fishbone</li>
+                        <li>Lean/DFMA mindset</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section class="education-section" id="specialization">
+        <h2 class="editable">Education — The Path</h2>
+
+        <div class="edu-item">
+            <h3 class="editable">B.Tech in Mechanical Engineering</h3>
+            <div class="edu-meta editable">Presidency University (2019–2023)</div>
+            <p class="editable">
+                I used undergrad to build core mechanical fundamentals—design, manufacturing basics, and how mechanical systems behave in the real world. This is where I realized I enjoy engineering most when it connects to real products and measurable performance.
+            </p>
+        </div>
+
+        <div class="edu-item">
+            <h3 class="editable">The Turning Point</h3>
+            <div class="edu-meta editable">Why Healthcare & Mechanical Systems?</div>
+            <p class="editable">
+                Seeing imaging systems and surgical instruments up close shifted my interest toward engineering that supports diagnosis, precision, and reliability. I wanted to be part of teams that build tools for real clinical impact.
+            </p>
+        </div>
+
+        <div class="edu-item">
+            <h3 class="editable">M.S. in Mechanical Engineering</h3>
+            <div class="edu-meta editable">Stevens Institute of Technology (2024–2025) | GPA: 3.67</div>
+            <p class="editable">
+                I chose Stevens to specialize in medical device design and manufacturability, supported by coursework in Design for Manufacturability, Medical Device Design & Technology, Biomechanics, and Quality in Life Sciences Manufacturing. I wanted a path that blends design with regulated thinking—documentation, verification, and repeatable processes.
+            </p>
+            <p style="color: var(--accent); font-weight: 600;">Core Competencies:</p>
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Medical Device Design lifecycle & user needs</li>
+                <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Quality Systems: ISO 13485, FDA 21 CFR 820, CAPA, 5-Why</li>
+                <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Lab Leadership: Managed 15+ robotics systems, guided 40+ students/semester</li>
+                <li style="color: var(--text-secondary);">✓ Process Improvement: Custom 3D-printed jigs reducing setup time by 30-40%</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section class="experience-section" id="experience">
+        <h2 class="editable">Experience</h2>
+
+        <div class="exp-category editable">Current & Recent</div>
+        
+        <div class="exp-item">
+            <h3 class="editable">Lab Assistant (Electromechanical Systems)</h3>
+            <div class="exp-meta editable">Stevens Institute of Technology (2024–Present)</div>
+            <p class="editable">
+                Supporting advanced lab systems, managing equipment setups, and improving prototyping fixture reliability for 40+ students per semester. Designed 3D-printed jigs that reduced setup time by 30–40% and improved reproducibility.
+            </p>
+            <ul>
+                <li>Managed 15+ robotics and electromechanical systems</li>
+                <li>Troubleshot equipment issues and coordinated repairs</li>
+                <li>Created custom prototyping fixtures using FDM/SLA printing</li>
+                <li>Documented procedures and best practices for student teams</li>
+            </ul>
+        </div>
+
+        <div class="exp-category editable">Full-Time Engineering</div>
+        
+        <div class="exp-item">
+            <h3 class="editable">Graduate Engineer Trainee</h3>
+            <div class="exp-meta editable">TD Power Systems (Bengaluru, India) | 2023</div>
+            <p class="editable">
+                Worked on mechanical design, heat-exchanger optimization, and design-to-manufacturing coordination. Learned the critical link between CAD theory and real-world manufacturing constraints.
+            </p>
+            <ul>
+                <li>Improved heat-exchanger cooling efficiency by ~8% through engineering analysis</li>
+                <li>Validated designs on the shop floor, reducing rework and improving coordination</li>
+                <li>Managed supplier communication and coordinated design change approvals</li>
+            </ul>
+        </div>
+
+        <div class="exp-category editable">Early Industry Experience</div>
+        
+        <div class="exp-item">
+            <h3 class="editable">Internship — Quality & Process Improvement</h3>
+            <div class="exp-meta editable">Toyota Kirloskar Motors (Bengaluru, India) | 2022</div>
+            <p class="editable">
+                Foundation in quality systems and Lean methodologies. Applied Statistical Process Control (SPC) and Root Cause Analysis (RCA) on a high-volume assembly line, learning how quality compounds across processes.
+            </p>
+            <ul>
+                <li>Reduced recurring line defects by 10–15% using SPC and RCA tools</li>
+                <li>Assisted technicians with issue identification and process stabilization</li>
+                <li>Improved operator safety and production flow by ~10% through material handling optimization</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section class="projects-preview" id="projects">
+        <h2 class="editable">Featured Projects</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 40px; font-size: 1rem;">
+            Coming soon: Dedicated project pages with 3D visuals, technical details, and outcomes.
+        </p>
+        
+        <div class="project-tiles">
+            <div class="project-tile" onclick="alert('Project details coming in Step 2')">
+                <h3>🔬 Medical Device Design</h3>
+                <p>Academic capstone project applying FDA 21 CFR 820 and ISO 13485 principles to device concept development.</p>
+            </div>
+
+            <div class="project-tile" onclick="alert('Project details coming in Step 2')">
+                <h3>⚙️ Manufacturing Fixture Design</h3>
+                <p>3D-printed jigs and test fixtures for lab equipment automation, reducing setup time by 30–40%.</p>
+            </div>
+
+            <div class="project-tile" onclick="alert('Project details coming in Step 2')">
+                <h3>📊 Lean Process Improvement</h3>
+                <p>Toyota internship project applying SPC/RCA to reduce defects and improve line efficiency by 10–15%.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOBBIES SECTION -->
+    <section class="story-section" id="hobbies">
+        <h2 class="editable">Beyond Engineering</h2>
+        <p class="story-text editable">
+            When I'm not designing, I'm usually at the gym, working on side projects with my 3D printer, or playing acoustic guitar. I believe that the best engineers are curious learners who stay sharp across disciplines—fitness keeps me disciplined, making keeps my hands-on skills fresh, and music keeps my mind creative.
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Jayanth Gowda. All rights reserved.</p>
+        <p>
+            <a href="mailto:jayanth@example.com">Email</a> | 
+            <a href="https://linkedin.com/in/jayanth" target="_blank">LinkedIn</a> | 
+            <a href="https://github.com/maddawgh" target="_blank">GitHub</a>
+        </p>
+    </footer>
 
     <div class="edit-toggle" onclick="toggleEdit()">✏️ Edit Text</div>
 
     <script>
-        function openOverlay(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeOverlay(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
-        
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelector(`a[href="#${sectionId}"]`).classList.add('active');
+            }
+        }
+
         // LIVE EDIT SCRIPT
         let isEditable = false;
         function toggleEdit() {
@@ -263,15 +466,16 @@
             elements.forEach(el => {
                 el.contentEditable = isEditable;
                 el.style.border = isEditable ? "1px dashed #38bdf8" : "none";
+                el.style.padding = isEditable ? "5px" : "0";
             });
             
             if(isEditable) {
-                btn.textContent = "💾 Done (Now Copy Code)";
-                btn.style.background = "#22c55e"; // Green
-                alert("EDIT MODE ACTIVE: You can now click on text to change it.\n\nIMPORTANT: Changes are NOT saved to GitHub automatically. If you like the changes, you must copy the new text into your code file.");
+                btn.textContent = "💾 Done (Copy Code)";
+                btn.style.background = "#22c55e";
+                alert("EDIT MODE ACTIVE: Click any text marked with dashed borders to edit.\n\nIMPORTANT: Changes are NOT saved automatically. Copy the updated HTML when done.");
             } else {
                 btn.textContent = "✏️ Edit Text";
-                btn.style.background = "#38bdf8"; // Blue
+                btn.style.background = "#38bdf8";
             }
         }
     </script>
