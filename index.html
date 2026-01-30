@@ -7,17 +7,16 @@
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --bg-color: #0f172a;
+            --bg-color: #0b1120;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --accent: #38bdf8; /* Medical Blue */
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --nav-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --nav-bg: rgba(11, 17, 32, 0.95);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-primary); overflow-x: hidden; line-height: 1.7; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
 
         /* --- NAVIGATION --- */
         nav {
@@ -34,60 +33,67 @@
         }
         .nav-item:hover { color: var(--accent); }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO --- */
         header {
-            min-height: 85vh;
+            min-height: 90vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b1120 100%); padding: 100px 20px;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b1120 100%); padding: 20px;
         }
 
         .profile-container {
-            width: 180px; height: 180px; border-radius: 50%; padding: 4px;
+            width: 170px; height: 170px; border-radius: 50%; padding: 4px;
             background: linear-gradient(135deg, var(--accent), #818cf8);
             box-shadow: 0 0 30px rgba(56, 189, 248, 0.4); margin-bottom: 30px;
         }
         .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-color); }
         
-        h1 { font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; max-width: 900px;}
-        .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin-bottom: 40px; }
+        h1 { font-size: 3.5rem; margin-bottom: 15px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; }
+        .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; line-height: 1.6; }
 
-        /* --- MAIN CONTENT CONTAINER --- */
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        /* --- MAGAZINE TIMELINE LAYOUT --- */
+        .timeline-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: rgba(56, 189, 248, 0.3); transform: translateX(-50%); }
 
-        /* --- SECTIONS --- */
-        .section-title { font-size: 2rem; margin-bottom: 40px; border-left: 4px solid var(--accent); padding-left: 20px; }
-        
-        .story-block { margin-bottom: 80px; padding: 0 20px; }
-        .story-block h3 { color: var(--accent); font-size: 1.3rem; margin-bottom: 15px; }
-        .story-block p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 20px; }
-
-        /* TEASER CARDS (Links to Tabs) */
-        .teaser-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 100px; }
-        
-        .teaser-card {
-            background: var(--card-bg); padding: 30px; border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-            cursor: pointer; position: relative; overflow: hidden;
-        }
-        .teaser-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .teaser-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
-        .teaser-title { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .teaser-desc { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 20px; }
-        .teaser-link { color: var(--accent); font-weight: bold; font-size: 0.9rem; }
-
-        /* --- EDIT TOGGLE --- */
-        .edit-toggle { 
-            position: fixed; bottom: 30px; right: 30px; 
-            background: var(--accent); color: #000; 
-            padding: 12px 24px; border-radius: 30px; 
-            cursor: pointer; font-weight: 700; z-index: 5000;
-            box-shadow: 0 4px 20px rgba(56,189,248,0.5);
+        .timeline-row {
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 120px; position: relative;
         }
 
-        /* --- OVERLAYS (THE TABS) --- */
+        /* NARRATIVE TEXT (Story Side) */
+        .narrative-text {
+            width: 42%; padding: 0 50px;
+            font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary);
+            text-align: right;
+        }
+        .narrative-highlight { color: var(--accent); font-weight: 600; }
+
+        /* ACTION CARD (Clickable Side) */
+        .action-card {
+            width: 42%; padding: 35px;
+            background: var(--card-bg); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s;
+            cursor: pointer; position: relative;
+        }
+        .action-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .card-category { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px; display: block; }
+        .card-title { font-size: 2rem; margin-bottom: 10px; color: #fff; }
+        .view-btn { font-size: 0.9rem; color: #fff; display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; margin-top: 15px;}
+
+        /* DOT & ALTERNATING LAYOUT */
+        .timeline-dot {
+            width: 20px; height: 20px; background: var(--bg-color); border: 3px solid var(--accent); border-radius: 50%;
+            position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 0 15px var(--accent); z-index: 2;
+        }
+        .timeline-row.reverse { flex-direction: row-reverse; }
+        .timeline-row.reverse .narrative-text { text-align: left; }
+
+        /* --- OVERLAY & TABS SYSTEM --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.98); z-index: 2000;
+            background: rgba(15, 23, 42, 0.99); z-index: 2000;
             display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s;
         }
         .overlay.active { display: block; opacity: 1; }
@@ -95,28 +101,36 @@
         .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: var(--text-secondary); cursor: pointer; z-index: 2001; }
         .close-btn:hover { color: var(--accent); }
 
-        /* --- TABBED CONTENT INSIDE OVERLAYS --- */
-        .inner-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .inner-tab { padding: 10px 20px; cursor: pointer; color: var(--text-secondary); border-bottom: 2px solid transparent; }
+        /* TABS INSIDE OVERLAY */
+        .inner-tabs { display: flex; gap: 20px; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
+        .inner-tab { padding: 10px 0; cursor: pointer; color: var(--text-secondary); border-bottom: 2px solid transparent; font-size: 1.1rem; margin-right: 20px; }
         .inner-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        
         .tab-content-panel { display: none; animation: fadeIn 0.4s; }
         .tab-content-panel.active { display: block; }
 
-        /* VISUAL PLACEHOLDERS */
+        /* VISUAL PLACEHOLDER BOXES */
         .visual-box {
-            width: 100%; height: 250px; background: #1e293b; 
+            width: 100%; height: 300px; background: #1e293b; 
             border: 2px dashed #475569; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            color: #64748b; margin: 20px 0; font-weight: bold;
+            color: #64748b; margin: 25px 0; font-weight: bold; overflow: hidden;
         }
+        .visual-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* EDIT TOGGLE */
+        .edit-toggle { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-weight: 700; z-index: 5000; box-shadow: 0 4px 20px rgba(56,189,248,0.5); }
+        .editable[contenteditable="true"] { border: 1px dashed var(--accent); background: rgba(56,189,248,0.05); }
 
         @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* EDITABLE HIGHLIGHT */
-        .editable[contenteditable="true"] { border: 1px dashed var(--accent); padding: 5px; border-radius: 4px; background: rgba(56,189,248,0.05); }
-
+        /* MOBILE FIXES */
+        @media (max-width: 900px) {
+            .timeline-row, .timeline-row.reverse { flex-direction: column; align-items: flex-start; border-left: 2px solid rgba(56,189,248,0.3); padding-left: 25px; margin-bottom: 60px; margin-left: 0; }
+            .timeline-line, .timeline-dot { display: none; }
+            .narrative-text, .action-card { width: 100%; padding: 0; text-align: left; }
+            .narrative-text { margin-bottom: 25px; padding-right: 0; }
+        }
     </style>
 </head>
 <body>
@@ -124,106 +138,143 @@
     <nav>
         <div class="nav-logo">Jayanth Gowda</div>
         <div class="nav-links">
-            <div class="nav-item" onclick="location.href='#'">Home</div>
-            <div class="nav-item" onclick="openOverlay('overlay-edu')">Specialization</div>
+            <div class="nav-item" onclick="openOverlay('overlay-btech')">Origin</div>
+            <div class="nav-item" onclick="openOverlay('overlay-masters')">Masters</div>
             <div class="nav-item" onclick="openOverlay('overlay-exp')">Experience</div>
-            <div class="nav-item" onclick="openOverlay('overlay-proj')">Projects</div>
-            <div class="nav-item" onclick="openOverlay('overlay-hobby')">Hobbies</div>
+            <div class="nav-item" onclick="openOverlay('overlay-projects')">Projects</div>
+            <div class="nav-item" onclick="openOverlay('overlay-hobbies')">Hobbies</div>
         </div>
     </nav>
 
     <header>
         <div class="profile-container">
-            <img src="profile.jpg" alt="Profile" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+            <img src="profile.jpg" alt="Jayanth Gowda" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
         <p class="hero-sub editable">
-            Mechanical Engineer (M.S.) | Medical Device Design & Manufacturing<br>
-            Building reliable, manufacturable, and testable healthcare systems.
+            Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>
+            Bridging the gap between theoretical mechanics and FDA-compliant healthcare solutions.
         </p>
     </header>
 
-    <div class="container">
+    <div class="timeline-section">
+        <div class="timeline-line"></div>
 
-        <div class="story-block">
-            <h2 class="section-title editable">The Origin: Why Mechanical?</h2>
-            <div class="editable">
-                <p>I started in science because I wanted to understand how things work at a fundamental level. I chose Mechanical Engineering because it turns that curiosity into real, tangible systems you can design, build, and validate.</p>
-                <p>During my undergrad, I realized that I didn't just want to create "things"—I wanted to create systems that solve critical problems. This foundation in mechanics, thermodynamics, and manufacturing gave me the toolkit to do exactly that.</p>
+        <div class="timeline-row">
+            <div class="narrative-text editable">
+                I started in science because I wanted to understand how things work at a fundamental level. I chose <span class="narrative-highlight">Mechanical Engineering</span> because it turns that curiosity into real, tangible systems you can design, build, and validate.
             </div>
-            <div class="visual-box">Visual: Undergrad Capstone / Mechanical Workshop Photo</div>
-        </div>
-
-        <div class="story-block">
-            <h2 class="section-title editable">The Pivot: Medical Devices</h2>
-            <div class="editable">
-                <p>The turning point happened during a hospital visit. Watching a CT Scanner in operation, I became fascinated by the precision required to diagnose a patient. It wasn't just biology; it was engineering.</p>
-                <p>I chose to pursue my Masters at Stevens Institute of Technology to specialize specifically in Medical Device Design. I wanted to bridge the gap between "working prototype" and "FDA-compliant product," focusing on quality systems, reliability, and manufacturability.</p>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-btech')">
+                <span class="card-category">THE ORIGIN</span>
+                <h3 class="card-title editable">Bachelors Foundation</h3>
+                <div class="view-btn">View Undergrad Details →</div>
             </div>
         </div>
 
-        <div class="section-title">Explore My Work</div>
-        <div class="teaser-grid">
-            
-            <div class="teaser-card" onclick="openOverlay('overlay-exp')">
-                <span class="teaser-icon">💼</span>
-                <h3 class="teaser-title">Professional Experience</h3>
-                <p class="teaser-desc editable">From Toyota's assembly lines to Stevens' Robotics Labs. See how I improved efficiency by 8% and reduced defects by 15%.</p>
-                <span class="teaser-link">View Roles & Visuals →</span>
+        <div class="timeline-row reverse">
+            <div class="narrative-text editable">
+                The turning point was a hospital visit. Watching a CT Scanner in operation, I realized modern surgery relies entirely on mechanical precision. That fascination drove me to pursue my Masters in <span class="narrative-highlight">Medical Device Design</span> at Stevens.
             </div>
-
-            <div class="teaser-card" onclick="openOverlay('overlay-proj')">
-                <span class="teaser-icon">⚙️</span>
-                <h3 class="teaser-title">Projects & Innovation</h3>
-                <p class="teaser-desc editable">Exoskeleton optimization, Lab Fixture designs, and Heat Exchanger analysis. Explore the 3D gallery.</p>
-                <span class="teaser-link">View 3D Gallery →</span>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-masters')">
+                <span class="card-category">SPECIALIZATION</span>
+                <h3 class="card-title editable">Masters at Stevens</h3>
+                <div class="view-btn">View Coursework & Skills →</div>
             </div>
+        </div>
 
-            <div class="teaser-card" onclick="openOverlay('overlay-hobby')">
-                <span class="teaser-icon">🏔️</span>
-                <h3 class="teaser-title">Hobbies & Interests</h3>
-                <p class="teaser-desc editable">When I'm not engineering, I'm exploring. See what drives my creativity outside the lab.</p>
-                <span class="teaser-link">View Hobbies →</span>
+        <div class="timeline-row">
+            <div class="narrative-text editable">
+                Engineering isn't finished until it works on the shop floor. From Toyota's assembly lines to Stevens' Robotics Labs, I've focused on <span class="narrative-highlight">manufacturability, reliability, and validation</span>.
             </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-exp')">
+                <span class="card-category">PROFESSIONAL EXPERIENCE</span>
+                <h3 class="card-title editable">My Career Journey</h3>
+                <div class="view-btn">Explore All Roles (Tabs) →</div>
+            </div>
+        </div>
 
+        <div class="timeline-row reverse">
+            <div class="narrative-text editable">
+                Innovation requires optimization. Whether optimizing 3D printing parameters for an Exoskeleton or designing custom Lab Fixtures, I focus on <span class="narrative-highlight">improving efficiency and performance</span>.
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-projects')">
+                <span class="card-category">INNOVATION</span>
+                <h3 class="card-title editable">Projects & Gallery</h3>
+                <div class="view-btn">View 3D Visuals →</div>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="narrative-text editable">
+                Curiosity doesn't stop when I leave the lab. I explore the world through photography, hiking, and personal design challenges.
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="action-card" onclick="openOverlay('overlay-hobbies')">
+                <span class="card-category">BEYOND ENGINEERING</span>
+                <h3 class="card-title editable">Hobbies</h3>
+                <div class="view-btn">See My Interests →</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="overlay-btech" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-btech')">×</div>
+        <div class="overlay-content">
+            <h2 class="editable">B.Tech in Mechanical Engineering</h2>
+            <p class="editable" style="color:var(--accent); margin-bottom:20px;">Presidency University (2019-2023)</p>
+            <div class="editable">
+                <p>I used my undergrad to build core mechanical fundamentals—design, manufacturing basics, and how mechanical systems behave in the real world.</p>
+                <br>
+                <ul>
+                    <li><strong>Key Focus:</strong> Thermodynamics, Kinematics, Manufacturing Processes.</li>
+                    <li><strong>Capstone:</strong> [Insert Capstone Title Here - Click 'Edit Text' to change].</li>
+                </ul>
+            </div>
+            <div class="visual-box">Visual: Undergrad Workshop / Graduation Photo</div>
         </div>
     </div>
 
-
-    <div id="overlay-edu" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-edu')">×</div>
+    <div id="overlay-masters" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">Specialization: Stevens Institute</h2>
-            <p class="editable" style="color:var(--accent); margin-bottom:30px;">M.S. Mechanical Engineering | GPA 3.67</p>
+            <h2 class="editable">M.S. Mechanical Engineering</h2>
+            <p style="color:var(--accent); margin-bottom:30px;">Stevens Institute of Technology (3.67 GPA)</p>
 
             <div class="inner-tabs">
-                <div class="inner-tab active" onclick="switchTab('edu', 'courses')">Core Courses</div>
-                <div class="inner-tab" onclick="switchTab('edu', 'skills')">Applied Skills</div>
+                <div class="inner-tab active" onclick="switchTab('ms', 'courses')">Core Courses</div>
+                <div class="inner-tab" onclick="switchTab('ms', 'skills')">Technical Skills</div>
             </div>
 
-            <div id="edu-courses" class="tab-content-panel active">
+            <div id="ms-courses" class="tab-content-panel active">
                 <div class="editable">
                     <h3>Medical Device Design & Technology</h3>
-                    <p>Learned the full lifecycle from user needs to FDA 510(k). Applied strict safety standards to design concepts.</p>
-                    <div class="visual-box">Visual: Course Project / Diagram</div>
+                    <p>Learned the full lifecycle from user needs to FDA 510(k). Applied strict safety standards.</p>
                     
-                    <h3>Quality in Life Sciences (ISO 13485)</h3>
-                    <p>Mastered the regulatory landscape including CAPA (Corrective and Preventive Action) and Root Cause Analysis.</p>
+                    <h3 style="margin-top:20px;">Quality in Life Sciences (ISO 13485)</h3>
+                    <p>Mastered regulatory landscapes, CAPA, and Root Cause Analysis strategies.</p>
+                    
+                    <h3 style="margin-top:20px;">Design for Manufacturability</h3>
+                    <p>Bridging the gap between "cool design" and "buildable product" using GD&T and tolerance analysis.</p>
                 </div>
             </div>
-
-            <div id="edu-skills" class="tab-content-panel">
+            
+            <div id="ms-skills" class="tab-content-panel">
                 <div class="editable">
                     <ul>
-                        <li><strong>Regulatory:</strong> FDA 21 CFR 820, ISO 13485, Risk Management (ISO 14971)</li>
-                        <li><strong>Software:</strong> SolidWorks, ANSYS, Minitab (SPC)</li>
+                        <li><strong>Software:</strong> SolidWorks, ANSYS, AutoCAD, Minitab.</li>
+                        <li><strong>Regulatory:</strong> FDA 21 CFR 820, ISO 13485, ISO 14971 (Risk Mgmt).</li>
+                        <li><strong>Manufacturing:</strong> CNC, 3D Printing (FDM/SLA), Injection Molding knowledge.</li>
                     </ul>
-                    <div class="visual-box">Visual: Certification / Software Screenshot</div>
+                    <div class="visual-box">Visual: Screenshot of CAD Software or Certifications</div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div id="overlay-exp" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-exp')">×</div>
@@ -231,84 +282,94 @@
             <h2 class="editable">Professional Experience</h2>
             
             <div class="inner-tabs">
-                <div class="inner-tab active" onclick="switchTab('exp', 'stevens')">Stevens (Lab)</div>
+                <div class="inner-tab active" onclick="switchTab('exp', 'stevens')">Stevens (Lab Lead)</div>
                 <div class="inner-tab" onclick="switchTab('exp', 'td')">TD Power</div>
                 <div class="inner-tab" onclick="switchTab('exp', 'toyota')">Toyota</div>
             </div>
 
             <div id="exp-stevens" class="tab-content-panel active">
-                <h3 class="editable">Lab Assistant & Lead</h3>
+                <h3 class="editable">Graduate Lab Assistant</h3>
                 <div class="editable">
-                    <p><strong>Role:</strong> Maintaining 15+ electromechanical systems.</p>
+                    <p><strong>Focus:</strong> Lab Management, Fixture Design, Mentorship.</p>
                     <ul>
-                        <li>Designed custom 3D-printed jigs using FDM to simplify lab setups.</li>
-                        <li>Reduced preparation time by 30-40% through these custom tools.</li>
-                        <li>Guided 40+ students per semester, reducing setup errors by 30%.</li>
+                        <li>Maintained 15+ electromechanical and robotics systems.</li>
+                        <li>Designed custom 3D-printed jigs using FDM to simplify lab setups, reducing prep time by 30-40%.</li>
+                        <li>Ensured 100% safety compliance while guiding 40+ students per semester.</li>
                     </ul>
                 </div>
-                <div class="visual-box">Visual: Photo of Lab Setup / 3D Printed Jig</div>
+                <div class="visual-box">Visual: Photo of Lab Equipment / Printed Jigs</div>
             </div>
 
             <div id="exp-td" class="tab-content-panel">
                 <h3 class="editable">Graduate Engineer Trainee</h3>
                 <div class="editable">
-                    <p><strong>Role:</strong> Bridging CAD to Manufacturing.</p>
+                    <p><strong>Focus:</strong> Heat Exchanger Design, Manufacturing Validation.</p>
                     <ul>
                         <li>Improved heat-exchanger cooling efficiency by ~8% through engineering calculations.</li>
-                        <li>Worked on the shop floor to validate designs, reducing rework.</li>
+                        <li>Bridged the gap between CAD team and shop floor, reducing validation rework.</li>
                     </ul>
                 </div>
-                <div class="visual-box">Visual: Heat Exchanger CAD / Shop Floor</div>
+                <div class="visual-box">Visual: Heat Exchanger Diagram / Shop Floor</div>
             </div>
 
-             <div id="exp-toyota" class="tab-content-panel">
+            <div id="exp-toyota" class="tab-content-panel">
                 <h3 class="editable">Engineering Intern</h3>
                 <div class="editable">
-                    <p><strong>Role:</strong> Quality Systems & Assembly Support.</p>
+                    <p><strong>Focus:</strong> Quality Systems, RCA, Process Improvement.</p>
                     <ul>
-                        <li>Used Fishbone diagrams (RCA) to identify process deviations.</li>
-                        <li>Contributed to a 10-15% reduction in recurring defects using SPC.</li>
+                        <li>Utilized Fishbone diagrams (RCA) and 5-Why analysis to identify process deviations.</li>
+                        <li>Contributed to a 10-15% reduction in recurring defects using SPC tools.</li>
                     </ul>
                 </div>
-                <div class="visual-box">Visual: Assembly Line / Fishbone Diagram</div>
+                <div class="visual-box">Visual: Toyota Assembly Line / Fishbone Diagram</div>
             </div>
         </div>
     </div>
 
-
-    <div id="overlay-proj" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-proj')">×</div>
+    <div id="overlay-projects" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-projects')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">Innovation & Projects</h2>
+            <h2 class="editable">Projects & Innovation</h2>
             
-            <div class="story-block">
+            <div class="inner-tabs">
+                <div class="inner-tab active" onclick="switchTab('proj', 'exo')">Exoskeleton</div>
+                <div class="inner-tab" onclick="switchTab('proj', 'other')">Other Projects</div>
+            </div>
+
+            <div id="proj-exo" class="tab-content-panel active">
                 <h3 class="editable">Exoskeleton Design Optimization</h3>
                 <div class="editable">
-                    <p>Optimized the additive manufacturing process using PLA Carbon Fiber.</p>
-                    <ul>
-                        <li>Refined print parameters to reduce print time by 20%.</li>
-                        <li>Redesigned joints for easier assembly (DFMA).</li>
-                    </ul>
+                    <p><strong>Challenge:</strong> Slow print times and weak structural parts in standard PLA.</p>
+                    <p><strong>Solution:</strong> Optimized for PLA Carbon Fiber, refined print orientation, and redesigned joints.</p>
+                    <p><strong>Result:</strong> Reduced print time by 20% and improved structural integrity.</p>
                 </div>
                 <div class="visual-box">Visual: 3D Render of Exoskeleton</div>
-                <div class="visual-box">Visual: Photo of Physical Prototype</div>
+                <div class="visual-box">Visual: Photo of Prototype</div>
+            </div>
+
+            <div id="proj-other" class="tab-content-panel">
+                <div class="editable">
+                    <h3>Project 2 Title [Edit Me]</h3>
+                    <p>Description of another academic or personal project goes here.</p>
+                    <div class="visual-box">Visual: Project 2 Photo</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="overlay-hobby" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-hobby')">×</div>
+    <div id="overlay-hobbies" class="overlay">
+        <div class="close-btn" onclick="closeOverlay('overlay-hobbies')">×</div>
         <div class="overlay-content">
             <h2 class="editable">Hobbies & Interests</h2>
             <div class="editable">
-                <p>Engineering is my profession, but I stay curious through...</p>
+                <p>When I am not designing, I am exploring...</p>
                 <ul>
                     <li><strong>3D Printing:</strong> Tinkering with new materials and designs at home.</li>
-                    <li><strong>Photography:</strong> Capturing mechanical details in urban environments.</li>
-                    <li><strong>Hiking:</strong> Exploring the outdoors to disconnect and recharge.</li>
+                    <li><strong>Photography:</strong> Capturing details in urban environments.</li>
+                    <li><strong>Hiking:</strong> Disconnecting in nature to recharge.</li>
                 </ul>
             </div>
-            <div class="visual-box">Visual: Photo of 3D Print / Hiking Shot</div>
+            <div class="visual-box">Visual: Photo of Hiking or Hobby</div>
         </div>
     </div>
 
@@ -321,34 +382,35 @@
 
         // TAB LOGIC
         function switchTab(group, tabId) {
-            // Remove active class from tabs in this group
-            let tabs = document.querySelectorAll(`#overlay-${group} .inner-tab`);
+            // Remove active from tabs in this group
+            let tabs = document.querySelectorAll(`#overlay-${group === 'ms' ? 'masters' : group === 'proj' ? 'projects' : group} .inner-tab`);
+            if(tabs.length === 0) tabs = document.querySelectorAll(`#overlay-${group} .inner-tab`); // Fallback
+            
             tabs.forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Hide all panels in this group
-            let panels = document.querySelectorAll(`#overlay-${group} .tab-content-panel`);
+            // Hide panels
+            let panels = document.querySelectorAll(`#overlay-${group === 'ms' ? 'masters' : group === 'proj' ? 'projects' : group} .tab-content-panel`);
+            if(panels.length === 0) panels = document.querySelectorAll(`#overlay-${group} .tab-content-panel`); // Fallback
+
             panels.forEach(p => p.classList.remove('active'));
             
-            // Show selected panel
+            // Show selected
             document.getElementById(`${group}-${tabId}`).classList.add('active');
         }
 
-        // EDIT MODE LOGIC
+        // EDIT MODE
         let isEditable = false;
         function toggleEdit() {
             isEditable = !isEditable;
             const elements = document.querySelectorAll('.editable');
             const btn = document.querySelector('.edit-toggle');
-            
-            elements.forEach(el => {
-                el.contentEditable = isEditable;
-            });
+            elements.forEach(el => el.contentEditable = isEditable);
             
             if(isEditable) {
-                btn.textContent = "💾 Done (Now Copy Code)";
+                btn.textContent = "💾 Done (Copy Code Now)";
                 btn.style.background = "#22c55e";
-                alert("EDIT MODE ON: Click any text to type!\n\nRemember: This is a preview. To save permanently, copy your new text into your GitHub file.");
+                alert("EDIT MODE ON: Type anywhere to change text. Copy code to GitHub to save.");
             } else {
                 btn.textContent = "✏️ Edit Text";
                 btn.style.background = "#38bdf8";
