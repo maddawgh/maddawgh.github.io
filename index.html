@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
             --text-primary: #f1f5f9;
             --text-secondary: #94a3b8;
             --accent: #38bdf8; /* Medical Blue */
-            --accent-glow: rgba(56, 189, 248, 0.3);
+            --accent-glow: rgba(56, 189, 248, 0.5);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -19,39 +19,60 @@
 
         /* --- HERO SECTION --- */
         header {
-            height: 90vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b1120 100%);
-            position: relative;
+            padding: 20px;
+        }
+
+        /* PROFILE PICTURE STYLE */
+        .profile-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            box-shadow: 0 0 30px var(--accent-glow);
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-color);
         }
         
-        h1 { font-size: 4rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; animation: fadeIn 2s ease; }
-        .hero-sub { font-size: 1.5rem; color: var(--text-secondary); max-width: 800px; line-height: 1.6; }
+        h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; }
+        .hero-sub { font-size: 1.25rem; color: var(--text-secondary); max-width: 700px; line-height: 1.6; margin-top: 10px;}
         
         /* --- TIMELINE --- */
-        .timeline-section { padding: 50px 20px; max-width: 1100px; margin: 0 auto; position: relative; }
-        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: var(--accent); transform: translateX(-50%); box-shadow: 0 0 15px var(--accent); z-index: 0; }
+        .timeline-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; position: relative; }
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: var(--accent); transform: translateX(-50%); box-shadow: 0 0 15px var(--accent-glow); z-index: 0; }
         
         .timeline-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
             position: relative;
             z-index: 1;
-            cursor: pointer; /* Indicates clickable */
+            cursor: pointer;
         }
         
         .timeline-item:nth-child(even) { flex-direction: row-reverse; }
         
         .timeline-dot {
-            width: 24px; height: 24px; background: var(--accent); border-radius: 50%;
+            width: 20px; height: 20px; background: var(--accent); border-radius: 50%;
             position: absolute; left: 50%; transform: translateX(-50%);
             box-shadow: 0 0 20px var(--accent);
+            border: 4px solid var(--bg-color);
         }
         
         .timeline-card {
@@ -61,37 +82,37 @@
             border-radius: 15px;
             border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
         }
 
         .timeline-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
             border-color: var(--accent);
         }
         
-        .timeline-date { color: var(--accent); font-weight: bold; letter-spacing: 1px; font-size: 0.9rem; }
-        .timeline-title { font-size: 1.8rem; margin: 10px 0; }
-        .click-hint { font-size: 0.8rem; color: var(--text-secondary); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 5px;}
-        .click-hint::after { content: '→'; font-size: 1.2rem; }
+        .timeline-date { color: var(--accent); font-weight: 700; letter-spacing: 1px; font-size: 0.85rem; text-transform: uppercase; }
+        .timeline-title { font-size: 1.6rem; margin: 8px 0; color: #fff; }
+        .timeline-teaser { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; margin-bottom: 15px; }
+        
+        .click-cta { 
+            font-size: 0.85rem; color: var(--accent); font-weight: 600; 
+            display: flex; align-items: center; gap: 8px; opacity: 0.9;
+        }
+        .click-cta::after { content: '→'; transition: margin-left 0.3s; }
+        .timeline-card:hover .click-cta::after { margin-left: 10px; }
 
-        /* --- OVERLAY / MODAL SYSTEM (The "Page" Effect) --- */
+        /* --- OVERLAY SYSTEM --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(11, 17, 32, 0.98);
             z-index: 100;
-            display: none; /* Hidden by default */
-            overflow-y: auto;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s ease;
         }
         
         .overlay.active { display: block; opacity: 1; }
         
-        .overlay-content {
-            max-width: 900px; margin: 80px auto; padding: 40px;
-            animation: slideUp 0.6s ease;
-        }
+        .overlay-content { max-width: 900px; margin: 80px auto; padding: 40px 20px; animation: slideUp 0.5s ease; }
         
         .close-btn {
             position: fixed; top: 30px; right: 40px;
@@ -101,56 +122,50 @@
         .close-btn:hover { color: var(--accent); transform: rotate(90deg); }
 
         /* --- DETAIL STYLES --- */
-        .detail-header { border-bottom: 2px solid var(--accent); padding-bottom: 20px; margin-bottom: 40px; }
-        .detail-title { font-size: 3rem; color: var(--text-primary); }
-        .detail-role { font-size: 1.5rem; color: var(--accent); margin-top: 10px; }
+        .detail-header { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 40px; }
+        .detail-title { font-size: 2.5rem; color: #fff; }
+        .detail-role { font-size: 1.2rem; color: var(--accent); margin-top: 5px; }
         
-        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .detail-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-bottom: 40px; }
         
-        /* The "3D" Image Container */
         .visual-container {
-            height: 300px;
-            background: #1e293b;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--text-secondary);
-            perspective: 1000px;
+            height: 300px; background: #1e293b; border-radius: 12px;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1); perspective: 1000px;
         }
-        
-        .visual-img {
-            width: 90%; height: 90%; object-fit: cover; border-radius: 8px;
-            transition: transform 0.1s; /* For the JS tilt effect */
-        }
+        .visual-img { width: 100%; height: 100%; object-fit: cover; }
 
-        .metric-list li {
-            margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6;
-            padding-left: 20px; border-left: 3px solid var(--accent);
-        }
+        .metric-list li { margin-bottom: 15px; padding-left: 20px; border-left: 3px solid var(--accent); line-height: 1.6; }
 
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* --- ANIMATIONS & MOBILE --- */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
-        /* Mobile Fixes */
         @media (max-width: 768px) {
             .timeline-line { left: 20px; }
-            .timeline-item { flex-direction: column !important; align-items: flex-start; margin-left: 40px; }
-            .timeline-dot { left: -29px; }
+            .timeline-item { flex-direction: column !important; align-items: flex-start; margin-left: 50px; margin-bottom: 60px; }
+            .timeline-dot { left: -39px; }
             .timeline-card { width: 100%; }
             .detail-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5rem; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="profile-container">
+            <img src="profile.jpg" alt="Jayanth Gowda" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+        
         <h1>Jayanth Gowda</h1>
-        <p class="hero-sub">Masters in Mechanical Engineering <br> Specializing in <strong>Medical Device Design & Manufacturing</strong></p>
-        <p style="margin-top:20px; font-size: 0.9rem; opacity: 0.7;">Scroll to explore the journey ↓</p>
+        <p class="hero-sub">
+            Graduate Mechanical Engineer specializing in <strong>Medical Device Design</strong> & <strong>Quality Systems</strong>.<br>
+            Bridging the gap between theoretical mechanics and FDA-compliant healthcare solutions.
+        </p>
+        <p style="margin-top: 30px; font-size: 0.9rem; color: var(--accent);">
+            Scroll to explore the journey ↓
+        </p>
     </header>
 
     <div class="timeline-section">
@@ -159,214 +174,33 @@
         <div class="timeline-item" onclick="openOverlay('overlay-spark')">
             <div class="timeline-dot"></div>
             <div class="timeline-card">
-                <span class="timeline-date">THE BEGINNING</span>
-                <h3 class="timeline-title">The Spark</h3>
-                <p>How a hospital visit and a CT scan changed my career path from general sciences to Medical Engineering.</p>
-                <div class="click-hint">Read the story</div>
+                <span class="timeline-date">THE ORIGIN</span>
+                <h3 class="timeline-title">Why Medical Devices?</h3>
+                <p class="timeline-teaser">It wasn't a classroom that defined my career—it was a hospital visit. I realized modern surgery is 100% reliant on mechanical precision.</p>
+                <div class="click-cta">Read the full story</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" onclick="openOverlay('overlay-toyota')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-date">FOUNDATION</span>
+                <h3 class="timeline-title">The Toyota Way</h3>
+                <p class="timeline-teaser">How I applied legendary Quality Systems (RCA & SPC) to reduce manufacturing line defects by <strong>15%</strong>.</p>
+                <div class="click-cta">See the metrics</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" onclick="openOverlay('overlay-td')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-date">PROFESSIONAL EXPERIENCE</span>
+                <h3 class="timeline-title">Bridging CAD to Reality</h3>
+                <p class="timeline-teaser">Designed heat-exchanger improvements that boosted efficiency by <strong>8%</strong>. I learned that a design isn't finished until it works on the shop floor.</p>
+                <div class="click-cta">View Engineering Details</div>
             </div>
         </div>
 
         <div class="timeline-item" onclick="openOverlay('overlay-masters')">
             <div class="timeline-dot"></div>
-            <div class="timeline-card">
-                <span class="timeline-date">EDUCATION</span>
-                <h3 class="timeline-title">Masters at Stevens</h3>
-                <p>Deep diving into Medical Device Design, FDA compliance, and Biomechanics.</p>
-                <div class="click-hint">View Coursework</div>
-            </div>
-        </div>
-
-        <div class="timeline-item" onclick="openOverlay('overlay-exp')">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-                <span class="timeline-date">PROFESSIONAL EXPERIENCE</span>
-                <h3 class="timeline-title">Engineering Impact</h3>
-                <p>From shop floors at Toyota to Lab Management at Stevens. Real metrics, real results.</p>
-                <div class="click-hint">See Projects</div>
-            </div>
-        </div>
-
-        <div class="timeline-item" onclick="openOverlay('overlay-projects')">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-                <span class="timeline-date">INNOVATION</span>
-                <h3 class="timeline-title">Exoskeleton & Design</h3>
-                <p>3D Printing optimization and advanced prototyping.</p>
-                <div class="click-hint">View 3D Models</div>
-            </div>
-        </div>
-        
-         <div class="timeline-item" onclick="openOverlay('overlay-hobbies')">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-                <span class="timeline-date">PERSONAL</span>
-                <h3 class="timeline-title">Beyond Engineering</h3>
-                <p>What keeps me creative and moving.</p>
-                <div class="click-hint">Explore</div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="overlay-spark" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-spark')">×</div>
-        <div class="overlay-content">
-            <div class="detail-header">
-                <h2 class="detail-title">The Realization</h2>
-            </div>
-            <div class="detail-grid">
-                <div>
-                    <p style="font-size: 1.2rem; line-height: 1.8;">
-                        My journey didn't start in an engineering lab. It started in a hospital waiting room. 
-                        <br><br>
-                        I was fascinated by the sheer scale of the machines around me. When I saw a <strong>CT Scanner</strong> in operation, I realized that modern medicine is as much about mechanical precision as it is about biology. 
-                        <br><br>
-                        That moment defined my career: I didn't just want to build machines; I wanted to build machines that save lives.
-                    </p>
-                </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=Medical+Imaging+Tech" class="visual-img">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="overlay-masters" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
-        <div class="overlay-content">
-            <div class="detail-header">
-                <h2 class="detail-title">Stevens Institute of Technology</h2>
-                <div class="detail-role">M.S. Mechanical Engineering (3.67 GPA)</div>
-            </div>
-            
-            <h3>Key Coursework Breakdown</h3>
-            <br>
-            <div class="detail-grid">
-                <div>
-                    [cite_start]<h4>Medical Device Design & Technology [cite: 7]</h4>
-                    <p>Focused on the entire lifecycle of a device, from user needs to FDA 510(k) submission. Learned strict adherence to safety standards.</p>
-                    <br>
-                    [cite_start]<h4>Design for Manufacturability (DFM) [cite: 7]</h4>
-                    <p>Bridging the gap between a "cool design" and a "buildable product." Focused on tolerance stacks and material selection.</p>
-                </div>
-                <div>
-                    [cite_start]<h4>Quality in Life Sciences (ISO 13485) [cite: 12]</h4>
-                    <p>Mastered the regulatory landscape including CAPA (Corrective and Preventive Action) and Root Cause Analysis.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="overlay-exp" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-exp')">×</div>
-        <div class="overlay-content">
-            <div class="detail-header">
-                <h2 class="detail-title">Professional Experience</h2>
-            </div>
-
-            <div style="margin-bottom: 50px;">
-                [cite_start]<h3>Stevens Institute: Lab Assistant & Lead [cite: 16]</h3>
-                <div class="detail-grid">
-                    <ul class="metric-list">
-                        [cite_start]<li><strong>Equipment Management:</strong> Maintained 15+ electromechanical and robotics systems. [cite: 18]</li>
-                        [cite_start]<li><strong>Process Improvement:</strong> Designed custom 3D-printed jigs that reduced lab setup time by 40%. [cite: 20]</li>
-                        [cite_start]<li><strong>Safety Leadership:</strong> Guided 40+ students per semester, ensuring 100% safety compliance. [cite: 19]</li>
-                    </ul>
-                    <div class="visual-container">
-                        <img src="https://via.placeholder.com/400x300?text=Lab+Equipment+Setup" class="visual-img">
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                [cite_start]<h3>TD Power Systems: Graduate Engineer Trainee [cite: 21]</h3>
-                <div class="detail-grid">
-                    <ul class="metric-list">
-                        [cite_start]<li><strong>Efficiency Boost:</strong> Improved heat-exchanger cooling efficiency by ~8% through CAD redesigns. [cite: 24]</li>
-                        [cite_start]<li><strong>Shop Floor Validation:</strong> Worked directly on the line to validate designs, drastically reducing rework. [cite: 25]</li>
-                    </ul>
-                    <div class="visual-container">
-                        <img src="https://via.placeholder.com/400x300?text=Heat+Exchanger+CAD" class="visual-img">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="overlay-projects" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-projects')">×</div>
-        <div class="overlay-content">
-            <div class="detail-header">
-                <h2 class="detail-title">Academic Innovation</h2>
-            </div>
-            
-            <div class="detail-grid">
-                <div>
-                    [cite_start]<h3>Exoskeleton Design Optimization [cite: 34]</h3>
-                    <p style="margin-top: 10px;">
-                        <strong>The Challenge:</strong> Standard 3D printing was too slow and weak for load-bearing exoskeleton parts.
-                        <br><br>
-                        <strong>The Solution:</strong> I utilized PLA Carbon Fiber and optimized the print orientation and segmentation.
-                        <br><br>
-                        [cite_start]<strong>The Result:</strong> Reduced print time by 20% while increasing structural integrity. [cite: 36]
-                    </p>
-                </div>
-                <div class="visual-container">
-                    <img src="https://via.placeholder.com/400x300?text=Exoskeleton+Proto" class="visual-img">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="overlay-hobbies" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-hobbies')">×</div>
-        <div class="overlay-content">
-            <div class="detail-header">
-                <h2 class="detail-title">Hobbies & Interests</h2>
-            </div>
-            <p>
-                When I am not designing medical devices, I am exploring...
-                <br><br>
-                (You can add your hobbies here, e.g., Photography, Hiking, 3D Modeling for fun, etc.)
-            </p>
-        </div>
-    </div>
-
-    <script>
-        // OPEN OVERLAY
-        function openOverlay(id) {
-            document.getElementById(id).classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
-        }
-
-        // CLOSE OVERLAY
-        function closeOverlay(id) {
-            document.getElementById(id).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // SIMPLE 3D TILT EFFECT FOR IMAGES
-        document.querySelectorAll('.visual-container').forEach(container => {
-            container.addEventListener('mousemove', (e) => {
-                const img = container.querySelector('img');
-                const rect = container.getBoundingClientRect();
-                const x = e.clientX - rect.left; // x position within the element.
-                const y = e.clientY - rect.top;  // y position within the element.
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
-                const rotateY = ((x - centerX) / centerX) * 10;
-
-                img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-            });
-
-            container.addEventListener('mouseleave', () => {
-                const img = container.querySelector('img');
-                img.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            });
-        });
-    </script>
-</body>
-</html>
+            <div class="timeline-card
