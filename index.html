@@ -45,12 +45,12 @@
 
         /* --- HERO --- */
         header {
-            min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             padding: 20px;
         }
         .profile-gear-wrapper { position: relative; width: 220px; height: 220px; margin-bottom: 30px; display: flex; justify-content: center; align-items: center; }
-        /* Spinning Outer Ring */
         .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 60s linear infinite; fill: #334155; opacity: 0.5; }
+        /* Profile Image with Click-to-Edit hint */
         .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); z-index: 2; box-shadow: 0 0 40px var(--accent-glow); cursor: pointer; transition: 0.3s;}
         .profile-img:hover { border-color: #fff; }
 
@@ -60,108 +60,62 @@
         /* --- THE CHAIN TIMELINE --- */
         .timeline-section { padding: 80px 20px; max-width: 1400px; margin: 0 auto; position: relative; }
 
-        /* 1. THE MOVING CHAIN */
+        /* CHAIN */
         .chain-drive {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 20px;
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 14px;
             transform: translateX(-50%);
-            /* Chain Links Pattern */
             background-image: linear-gradient(#334155 50%, transparent 50%);
-            background-size: 100% 20px; 
+            background-size: 100% 16px; 
             z-index: 0;
-            border-left: 3px solid #1e293b; border-right: 3px solid #1e293b;
-            /* SLOW MOVEMENT */
-            animation: driveChain 2s linear infinite; 
+            border-left: 2px solid #1e293b; border-right: 2px solid #1e293b;
+            animation: driveChain 1s linear infinite;
         }
 
-        /* 2. TIMELINE ROWS */
-        .timeline-row {
-            display: flex; justify-content: center; align-items: center;
-            margin-bottom: 120px; position: relative; z-index: 1;
-        }
+        /* ROWS */
+        .timeline-row { display: flex; justify-content: center; align-items: center; margin-bottom: 80px; position: relative; z-index: 1; }
 
-        /* 3. THE SMALL PINION GEAR (Attached to Main Line) */
+        /* PINION GEAR */
         .pinion-gear {
             position: absolute; left: 50%; transform: translateX(-50%);
-            width: 70px; height: 70px;
-            z-index: 5; /* On top of chain */
-            background: var(--bg-color);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            border: 2px solid #334155;
-            box-shadow: 0 0 15px #000;
+            width: 60px; height: 60px; z-index: 5; background: var(--bg-color);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            border: 2px solid #334155; box-shadow: 0 0 15px #000;
         }
-        
         .pinion-svg { width: 100%; height: 100%; fill: #64748b; }
+        .timeline-row .pinion-svg { animation: spin 4s linear infinite; }
+        .timeline-row.reverse .pinion-svg { animation: spin 4s linear infinite reverse; }
 
-        /* Pinion Rotation - Medium Speed */
-        /* Right Side Row: Pinion spins CW */
-        .timeline-row .pinion-svg { animation: spin 10s linear infinite; }
-        /* Left Side Row: Pinion spins CCW */
-        .timeline-row.reverse .pinion-svg { animation: spin 10s linear infinite reverse; }
-
-
-        /* 4. THE GIANT CONTENT GEAR */
+        /* CONTENT GEAR */
         .gear-card-container {
-            width: 45%; height: 350px;
-            position: relative;
-            display: flex; align-items: center;
-            cursor: pointer;
-            /* CRITICAL MESHING LOGIC: Pull Closer to Center */
-            margin-left: -35px; 
+            width: 45%; height: 320px; position: relative; display: flex; align-items: center; cursor: pointer;
+            margin-left: -25px; /* Mesh */
         }
-
-        /* The Spinning Teeth (Background) */
         .gear-teeth {
-            position: absolute; width: 320px; height: 320px;
+            position: absolute; width: 300px; height: 300px;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' d='M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat;
-            z-index: 1;
-            opacity: 0.9;
-            left: 0;
+            background-size: contain; background-repeat: no-repeat; z-index: 1; opacity: 0.9; left: 0;
         }
-
-        /* Large Gear Rotation - VERY SLOW (60s) */
-        /* Right Side: Spins Opposite of Pinion (CCW) */
         .timeline-row .gear-teeth { animation: spin 60s linear infinite reverse; }
-        /* Left Side: Spins Opposite of Pinion (CW) */
         .timeline-row.reverse .gear-teeth { animation: spin 60s linear infinite; }
 
-
-        /* The Static Hub (Text Content) */
         .gear-hub {
-            position: absolute; z-index: 10;
-            width: 200px; height: 200px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
+            position: absolute; z-index: 10; width: 190px; height: 190px;
+            background: rgba(15, 23, 42, 0.95); border: 2px solid var(--accent); border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 15px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-            transition: transform 0.3s;
-            left: 60px; /* Center inside the teeth */
+            padding: 15px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: transform 0.3s;
+            left: 55px;
         }
+        .gear-card-container:hover .gear-hub { transform: scale(1.05); background: #0f172a; border-color: #fff; }
+        .gear-title { font-size: 1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.3; }
+        .gear-cta { font-size: 0.75rem; color: var(--accent); font-weight: bold; margin-top: 5px; border: 1px solid var(--accent); padding: 4px 10px; border-radius: 20px;}
 
-        /* Interactive Hover */
-        .gear-card-container:hover .gear-teeth { filter: drop-shadow(0 0 10px var(--accent)); }
-        .gear-card-container:hover .gear-hub { transform: scale(1.05); border-color: #fff; background: #0f172a; }
-        
-        .gear-title { font-size: 1.1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.3; }
-        .gear-cta { font-size: 0.75rem; color: var(--accent); font-weight: bold; margin-top: 5px; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px;}
-
-        /* Narrative Text */
-        .narrative-text { width: 35%; color: var(--text-muted); padding: 0 50px; font-size: 1.15rem; text-align: right; }
-        
-        /* REVERSE LAYOUT (Left Side Gears) */
+        /* NARRATIVE */
+        .narrative-text { width: 35%; color: var(--text-muted); padding: 0 40px; font-size: 1.1rem; text-align: right; }
         .timeline-row.reverse { flex-direction: row-reverse; }
         .timeline-row.reverse .narrative-text { text-align: left; }
-        /* Mesh Logic for Left Side */
-        .timeline-row.reverse .gear-card-container { 
-            margin-left: 0; margin-right: -35px; /* Pull right to mesh */
-            justify-content: flex-end; 
-        }
+        .timeline-row.reverse .gear-card-container { margin-left: 0; margin-right: -25px; justify-content: flex-end; }
         .timeline-row.reverse .gear-teeth { left: auto; right: 0; }
-        .timeline-row.reverse .gear-hub { left: auto; right: 60px; }
-
+        .timeline-row.reverse .gear-hub { left: auto; right: 55px; }
 
         /* --- OVERLAYS --- */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 17, 32, 0.98); z-index: 2000; display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s; }
@@ -169,7 +123,7 @@
         .overlay-content { max-width: 900px; margin: 80px auto; padding: 40px 20px; animation: slideUp 0.5s ease; }
         .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: var(--text-muted); cursor: pointer; z-index: 2001; }
         
-        /* Inner Tabs */
+        /* TABS & IMAGES */
         .tab-nav { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #334155; }
         .tab-btn { padding: 10px 20px; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 4px solid transparent; }
         .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
@@ -177,28 +131,35 @@
         .tab-panel.active { display: block; }
         
         .visual-placeholder { width: 100%; height: 300px; background: #1e293b; border: 1px dashed #475569; display: flex; align-items: center; justify-content: center; color: #64748b; margin-top: 20px; cursor: pointer; position: relative;}
-        .visual-placeholder::after { content: 'Click to Add Image URL'; position: absolute; bottom: 10px; right: 10px; font-size: 0.8rem; opacity: 0.5;}
+        .visual-placeholder::after { content: 'Click to Add Image File Name'; position: absolute; bottom: 10px; right: 10px; font-size: 0.8rem; opacity: 0.5;}
         .visual-img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Keyframes */
-        @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 20px; } }
+        /* ANIMATIONS */
+        @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 16px; } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Edit Mode */
-        .edit-fab { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 5000; box-shadow: 0 0 20px var(--accent-glow); }
-        .editable[contenteditable="true"] { border: 1px dashed var(--accent); background: rgba(56,189,248,0.1); }
-
-        /* Mobile */
-        @media (max-width: 900px) {
-            .chain-drive, .pinion-gear { display: none; }
-            .timeline-row, .timeline-row.reverse { flex-direction: column; margin-left: 0; margin-bottom: 60px; }
-            .gear-card-container { width: 100%; height: 280px; margin: 0 !important; justify-content: center !important;}
-            .gear-teeth { position: relative; left: auto; right: auto; }
-            .gear-hub { left: auto; right: auto; }
-            .narrative-text { width: 100%; text-align: center; margin-bottom: 20px; }
+        /* --- DEVELOPER TOOLS UI --- */
+        .dev-tools { 
+            position: fixed; bottom: 20px; right: 20px; 
+            background: #1e293b; padding: 10px; border-radius: 12px;
+            border: 1px solid var(--accent); z-index: 5000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: flex; gap: 10px;
         }
+        .dev-btn {
+            background: var(--accent); color: #000; border: none;
+            padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;
+        }
+        .dev-btn.save { background: #22c55e; color: #fff; }
+        .code-export-box {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; height: 70%; background: #0f172a; border: 2px solid var(--accent);
+            z-index: 6000; padding: 20px; display: none; flex-direction: column;
+        }
+        .code-export-box textarea { width: 100%; height: 90%; background: #1e293b; color: #fff; padding: 10px; }
+        .editable[contenteditable="true"] { border: 1px dashed var(--accent); background: rgba(56,189,248,0.1); }
     </style>
 </head>
 <body>
@@ -216,10 +177,8 @@
 
     <header>
         <div class="profile-gear-wrapper">
-            <svg class="profile-gear" viewBox="0 0 100 100">
-                <path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z"/>
-            </svg>
-            <img src="profile.jpg.jpeg" alt="Click to Add Photo" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+profile.jpg.jpeg'">
+            <svg class="profile-gear" viewBox="0 0 100 100"><path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z"/></svg>
+            <img src="profile.jpg.jpeg.jpeg" alt="Profile" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+profile.jpg.jpeg.jpeg'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
         <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>Building FDA-compliant healthcare solutions.</p>
@@ -230,13 +189,9 @@
 
         <div class="timeline-row">
             <div class="narrative-text editable">
-                I started in science to understand how things work. I chose <strong>Mechanical Engineering</strong> because it turns curiosity into real, tangible systems you can design and build.
+                I started in science to understand how things work. I chose <strong>Mechanical Engineering</strong> to design real systems.
             </div>
-            
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
-            </div>
-
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-btech')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -248,13 +203,9 @@
 
         <div class="timeline-row reverse">
             <div class="narrative-text editable">
-                Watching a CT Scanner in operation, I realized modern surgery relies on mechanical precision. I pivoted to <strong>Medical Devices</strong> at Stevens.
+                Seeing a CT Scanner in operation shifted my focus. I pivoted to <strong>Medical Devices</strong> at Stevens.
             </div>
-            
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
-            </div>
-
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-masters')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -266,13 +217,9 @@
 
         <div class="timeline-row">
             <div class="narrative-text editable">
-                Engineering isn't finished until it works on the shop floor. From Toyota's assembly lines to Stevens' Robotics Labs, I've focused on manufacturability.
+                I've focused on manufacturability, reliability, and validation across Toyota and Stevens Labs.
             </div>
-            
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
-            </div>
-
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-exp')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -284,13 +231,9 @@
 
         <div class="timeline-row reverse">
             <div class="narrative-text editable">
-                Whether optimizing 3D printing parameters for an Exoskeleton or designing custom Lab Fixtures, I focus on improving efficiency.
+                Optimizing 3D printing parameters for an Exoskeleton and designing custom Lab Fixtures.
             </div>
-            
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
-            </div>
-
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-projects')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -304,11 +247,7 @@
             <div class="narrative-text editable">
                 Curiosity doesn't stop in the lab. I explore the world through photography, 3D printing, and design challenges.
             </div>
-            
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
-            </div>
-
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 24 24"><path d="M12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-hobbies')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -321,155 +260,63 @@
 
     <div id="overlay-btech" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-btech')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">B.Tech in Mechanical Engineering</h2>
-            <p class="editable" style="color:var(--accent); margin-bottom:30px;">Presidency University (2019-2023)</p>
-            <div class="editable">
-                <p>I used my undergrad to build core mechanical fundamentals—design, manufacturing basics, and how mechanical systems behave in the real world.</p>
-                <ul>
-                    <li>Thermodynamics & Kinematics</li>
-                    <li>Manufacturing Processes</li>
-                </ul>
-            </div>
-            <div class="visual-placeholder image-editable">Upload Visual</div>
-        </div>
+        <div class="overlay-content"><h2 class="editable">B.Tech Details</h2><div class="visual-placeholder image-editable">Upload Visual</div></div>
     </div>
-
     <div id="overlay-masters" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">Masters at Stevens</h2>
-            <div class="tab-nav">
-                <div class="tab-btn active" onclick="switchTab('ms-courses', this)">Core Courses</div>
-                <div class="tab-btn" onclick="switchTab('ms-skills', this)">Skills</div>
-            </div>
-
-            <div id="ms-courses" class="tab-panel active">
-                <div class="editable">
-                    <h3>Medical Device Design</h3>
-                    <p>Full lifecycle from user needs to FDA 510(k).</p>
-                    <h3>Quality in Life Sciences (ISO 13485)</h3>
-                    <p>CAPA, Root Cause Analysis, and Compliance.</p>
-                </div>
-                <div class="visual-placeholder image-editable">Upload Course Visual</div>
-            </div>
-
-            <div id="ms-skills" class="tab-panel">
-                <ul class="editable">
-                    <li>SolidWorks & ANSYS</li>
-                    <li>FDA 21 CFR 820</li>
-                    <li>3D Printing (FDM/SLA)</li>
-                </ul>
-            </div>
-        </div>
+        <div class="overlay-content"><h2 class="editable">Masters Details</h2><div class="visual-placeholder image-editable">Upload Visual</div></div>
     </div>
-
     <div id="overlay-exp" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-exp')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">Professional Experience</h2>
-            <div class="tab-nav">
-                <div class="tab-btn active" onclick="switchTab('exp-stevens', this)">Stevens Lab</div>
-                <div class="tab-btn" onclick="switchTab('exp-td', this)">TD Power</div>
-                <div class="tab-btn" onclick="switchTab('exp-toyota', this)">Toyota</div>
-            </div>
-
-            <div id="exp-stevens" class="tab-panel active">
-                <h3 class="editable">Lab Lead & Fixture Design</h3>
-                <p class="editable">Designed custom 3D-printed jigs to simplify lab setups, reducing prep time by 30-40%.</p>
-                <div class="visual-placeholder image-editable">Upload Lab Visual</div>
-            </div>
-
-            <div id="exp-td" class="tab-panel">
-                <h3 class="editable">Graduate Engineer Trainee</h3>
-                <p class="editable">Improved heat-exchanger cooling efficiency by ~8% and validated designs on the shop floor.</p>
-                <div class="visual-placeholder image-editable">Upload Heat Exchanger Visual</div>
-            </div>
-            
-            <div id="exp-toyota" class="tab-panel">
-                <h3 class="editable">Engineering Intern</h3>
-                <p class="editable">Reduced recurring defects by 10-15% using RCA and SPC tools.</p>
-                <div class="visual-placeholder image-editable">Upload Line Visual</div>
-            </div>
-        </div>
+        <div class="overlay-content"><h2 class="editable">Experience Details</h2><div class="visual-placeholder image-editable">Upload Visual</div></div>
     </div>
-
     <div id="overlay-projects" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-projects')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">Projects</h2>
-            <div class="tab-nav">
-                <div class="tab-btn active" onclick="switchTab('proj-exo', this)">Exoskeleton</div>
-                <div class="tab-btn" onclick="switchTab('proj-other', this)">Other</div>
-            </div>
-            
-            <div id="proj-exo" class="tab-panel active">
-                <h3 class="editable">Exoskeleton Design Optimization</h3>
-                <p class="editable">Optimized print orientation for PLA Carbon Fiber, reducing print time by 20%.</p>
-                <div class="visual-placeholder image-editable">Upload Render</div>
-            </div>
-
-            <div id="proj-other" class="tab-panel">
-                <p class="editable">Other academic projects...</p>
-            </div>
-        </div>
+        <div class="overlay-content"><h2 class="editable">Project Details</h2><div class="visual-placeholder image-editable">Upload Visual</div></div>
     </div>
-
     <div id="overlay-hobbies" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-hobbies')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">Hobbies & Interests</h2>
-            <div class="editable">
-                <p>When I'm not designing, I explore the world...</p>
-                <ul>
-                    <li>3D Printing Experiments</li>
-                    <li>Photography</li>
-                    <li>Hiking</li>
-                </ul>
-            </div>
-            <div class="visual-placeholder image-editable">Upload Hobby Pic</div>
-        </div>
+        <div class="overlay-content"><h2 class="editable">Hobbies</h2><div class="visual-placeholder image-editable">Upload Visual</div></div>
     </div>
 
-    <div class="edit-fab" onclick="toggleEdit()">✏️ EDIT PAGE</div>
+    <div class="dev-tools">
+        <button class="dev-btn" onclick="toggleEdit()">✏️ EDIT MODE</button>
+        <button class="dev-btn save" onclick="exportCode()">💾 EXPORT CODE</button>
+    </div>
+
+    <div class="code-export-box" id="exportBox">
+        <h3 style="color:#fff; margin-bottom:10px;">COPY THIS CODE & PASTE INTO GITHUB:</h3>
+        <textarea id="codeArea"></textarea>
+        <button class="dev-btn" onclick="document.getElementById('exportBox').style.display='none'">CLOSE</button>
+    </div>
 
     <script>
         function openOverlay(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeOverlay(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
-        
-        function switchTab(panelId, btn) {
-            let parent = btn.parentElement.parentElement;
-            parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(panelId).classList.add('active');
-        }
 
         let isEditable = false;
         function toggleEdit() {
             isEditable = !isEditable;
-            
-            // Text Editing
             document.querySelectorAll('.editable').forEach(el => el.contentEditable = isEditable);
-            
-            // Image Editing
             document.querySelectorAll('.image-editable').forEach(img => {
-                if(isEditable) {
-                    img.style.cursor = "pointer";
-                    img.style.border = "2px dashed #38bdf8";
-                    img.onclick = function() {
-                        let url = prompt("Paste the URL of your image (or local file name like 'profile.jpg.jpeg'):", this.src);
-                        if(url) this.src = url;
-                    }
-                } else {
-                    img.style.border = "none";
-                    if(img.classList.contains('profile-img')) img.style.border = "4px solid #38bdf8";
-                    img.onclick = null;
-                }
+                img.style.cursor = isEditable ? "pointer" : "default";
+                img.style.border = isEditable ? "2px dashed #38bdf8" : "none";
+                img.onclick = isEditable ? function() {
+                    let url = prompt("Enter Image File Name (e.g., 'robot.jpg'):", this.src);
+                    if(url) this.src = url;
+                } : null;
             });
+            alert(isEditable ? "EDIT MODE ON: Click text to type. Click images to change file names." : "EDIT MODE OFF");
+        }
 
-            document.querySelector('.edit-fab').textContent = isEditable ? "💾 DONE (COPY CODE)" : "✏️ EDIT PAGE";
-            if(isEditable) alert("EDIT MODE ON:\n1. Click text to type.\n2. Click IMAGES to paste a new URL.\n\nNOTE: This is a preview. You must copy the code to GitHub to save changes permanently.");
+        function exportCode() {
+            // Clean up UI before exporting
+            document.querySelectorAll('.editable').forEach(el => el.removeAttribute('contenteditable'));
+            document.querySelectorAll('.image-editable').forEach(el => el.style.border = 'none');
+            
+            let html = document.documentElement.outerHTML;
+            document.getElementById('codeArea').value = html;
+            document.getElementById('exportBox').style.display = 'flex';
         }
     </script>
 </body>
