@@ -24,12 +24,11 @@
             color: var(--text-main); 
             overflow-x: hidden; 
             line-height: 1.6;
-            /* Blueprint Grid + Circles */
             background-image: 
-                radial-gradient(circle, rgba(56,189,248,0.05) 1px, transparent 1px),
+                radial-gradient(circle, rgba(56,189,248,0.03) 1px, transparent 1px),
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px, 100px 100px, 100px 100px;
+            background-size: 40px 40px, 100px 100px, 100px 100px;
         }
 
         /* --- NAV BAR --- */
@@ -46,12 +45,12 @@
 
         /* --- HERO --- */
         header {
-            min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             padding: 20px;
         }
         .profile-gear-wrapper { position: relative; width: 220px; height: 220px; margin-bottom: 30px; display: flex; justify-content: center; align-items: center; }
         /* Spinning Outer Ring */
-        .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 20s linear infinite; fill: #334155; opacity: 0.5; }
+        .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 60s linear infinite; fill: #334155; opacity: 0.5; }
         .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); z-index: 2; box-shadow: 0 0 40px var(--accent-glow); cursor: pointer; transition: 0.3s;}
         .profile-img:hover { border-color: #fff; }
 
@@ -63,26 +62,27 @@
 
         /* 1. THE MOVING CHAIN */
         .chain-drive {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 14px;
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 20px;
             transform: translateX(-50%);
-            /* Looking like a chain link */
+            /* Chain Links Pattern */
             background-image: linear-gradient(#334155 50%, transparent 50%);
-            background-size: 100% 16px; 
+            background-size: 100% 20px; 
             z-index: 0;
-            border-left: 2px solid #1e293b; border-right: 2px solid #1e293b;
-            animation: driveChain 1s linear infinite; /* Fast Chain Speed */
+            border-left: 3px solid #1e293b; border-right: 3px solid #1e293b;
+            /* SLOW MOVEMENT */
+            animation: driveChain 2s linear infinite; 
         }
 
         /* 2. TIMELINE ROWS */
         .timeline-row {
             display: flex; justify-content: center; align-items: center;
-            margin-bottom: 80px; position: relative; z-index: 1;
+            margin-bottom: 120px; position: relative; z-index: 1;
         }
 
         /* 3. THE SMALL PINION GEAR (Attached to Main Line) */
         .pinion-gear {
             position: absolute; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 60px;
+            width: 70px; height: 70px;
             z-index: 5; /* On top of chain */
             background: var(--bg-color);
             border-radius: 50%;
@@ -91,80 +91,76 @@
             box-shadow: 0 0 15px #000;
         }
         
-        /* Pinion SVG */
-        .pinion-svg { 
-            width: 100%; height: 100%; fill: #64748b; 
-        }
+        .pinion-svg { width: 100%; height: 100%; fill: #64748b; }
 
-        /* Pinion Rotation - Fast (High RPM) */
-        /* Right Side Row: Pinion spins CW to drive Large Gear CCW */
-        .timeline-row .pinion-svg { animation: spin 4s linear infinite; }
-        /* Left Side Row: Pinion spins CCW to drive Large Gear CW */
-        .timeline-row.reverse .pinion-svg { animation: spin 4s linear infinite reverse; }
+        /* Pinion Rotation - Medium Speed */
+        /* Right Side Row: Pinion spins CW */
+        .timeline-row .pinion-svg { animation: spin 10s linear infinite; }
+        /* Left Side Row: Pinion spins CCW */
+        .timeline-row.reverse .pinion-svg { animation: spin 10s linear infinite reverse; }
 
 
         /* 4. THE GIANT CONTENT GEAR */
         .gear-card-container {
-            width: 45%; height: 320px;
+            width: 45%; height: 350px;
             position: relative;
             display: flex; align-items: center;
             cursor: pointer;
-            /* Meshing Logic: Move closer to center to touch pinion */
-            margin-left: -25px; /* Pull left to mesh with center */
+            /* CRITICAL MESHING LOGIC: Pull Closer to Center */
+            margin-left: -35px; 
         }
 
         /* The Spinning Teeth (Background) */
         .gear-teeth {
-            position: absolute; width: 300px; height: 300px;
-            /* Gear SVG Shape */
+            position: absolute; width: 320px; height: 320px;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' d='M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
             z-index: 1;
             opacity: 0.9;
-            left: 0; /* Align to container start */
+            left: 0;
         }
 
-        /* Large Gear Rotation - Slow (Low RPM, High Torque) */
-        /* Right Side Row: Spins Opposite of Pinion (CCW) */
-        .timeline-row .gear-teeth { animation: spin 16s linear infinite reverse; }
-        /* Left Side Row: Spins Opposite of Pinion (CW) */
-        .timeline-row.reverse .gear-teeth { animation: spin 16s linear infinite; }
+        /* Large Gear Rotation - VERY SLOW (60s) */
+        /* Right Side: Spins Opposite of Pinion (CCW) */
+        .timeline-row .gear-teeth { animation: spin 60s linear infinite reverse; }
+        /* Left Side: Spins Opposite of Pinion (CW) */
+        .timeline-row.reverse .gear-teeth { animation: spin 60s linear infinite; }
 
 
-        /* The Static Hub (Text Content) - Does NOT Spin */
+        /* The Static Hub (Text Content) */
         .gear-hub {
             position: absolute; z-index: 10;
-            width: 190px; height: 190px;
+            width: 200px; height: 200px;
             background: rgba(15, 23, 42, 0.95);
             border: 2px solid var(--accent);
             border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             padding: 15px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
             transition: transform 0.3s;
-            left: 55px; /* Center inside the teeth */
+            left: 60px; /* Center inside the teeth */
         }
 
         /* Interactive Hover */
-        .gear-card-container:hover .gear-teeth { filter: drop-shadow(0 0 8px var(--accent)); }
+        .gear-card-container:hover .gear-teeth { filter: drop-shadow(0 0 10px var(--accent)); }
         .gear-card-container:hover .gear-hub { transform: scale(1.05); border-color: #fff; background: #0f172a; }
         
-        .gear-title { font-size: 1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.3; }
-        .gear-cta { font-size: 0.75rem; color: var(--accent); font-weight: bold; margin-top: 5px; border: 1px solid var(--accent); padding: 4px 10px; border-radius: 20px;}
+        .gear-title { font-size: 1.1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.3; }
+        .gear-cta { font-size: 0.75rem; color: var(--accent); font-weight: bold; margin-top: 5px; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px;}
 
         /* Narrative Text */
-        .narrative-text { width: 35%; color: var(--text-muted); padding: 0 40px; font-size: 1.1rem; text-align: right; }
+        .narrative-text { width: 35%; color: var(--text-muted); padding: 0 50px; font-size: 1.15rem; text-align: right; }
         
         /* REVERSE LAYOUT (Left Side Gears) */
         .timeline-row.reverse { flex-direction: row-reverse; }
         .timeline-row.reverse .narrative-text { text-align: left; }
         /* Mesh Logic for Left Side */
         .timeline-row.reverse .gear-card-container { 
-            margin-left: 0; margin-right: -25px; /* Pull right to mesh */
-            justify-content: flex-end; /* Align to right side */
+            margin-left: 0; margin-right: -35px; /* Pull right to mesh */
+            justify-content: flex-end; 
         }
         .timeline-row.reverse .gear-teeth { left: auto; right: 0; }
-        .timeline-row.reverse .gear-hub { left: auto; right: 55px; }
+        .timeline-row.reverse .gear-hub { left: auto; right: 60px; }
 
 
         /* --- OVERLAYS --- */
@@ -185,7 +181,7 @@
         .visual-img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Keyframes */
-        @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 16px; } }
+        @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 20px; } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -198,7 +194,7 @@
         @media (max-width: 900px) {
             .chain-drive, .pinion-gear { display: none; }
             .timeline-row, .timeline-row.reverse { flex-direction: column; margin-left: 0; margin-bottom: 60px; }
-            .gear-card-container { width: 100%; height: 260px; margin: 0 !important; justify-content: center !important;}
+            .gear-card-container { width: 100%; height: 280px; margin: 0 !important; justify-content: center !important;}
             .gear-teeth { position: relative; left: auto; right: auto; }
             .gear-hub { left: auto; right: auto; }
             .narrative-text { width: 100%; text-align: center; margin-bottom: 20px; }
@@ -223,7 +219,7 @@
             <svg class="profile-gear" viewBox="0 0 100 100">
                 <path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z"/>
             </svg>
-            <img src="profile.jpg" alt="Click to Add Photo" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+Profile.jpg'">
+            <img src="profile.jpg.jpeg" alt="Click to Add Photo" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+profile.jpg.jpeg'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
         <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>Building FDA-compliant healthcare solutions.</p>
@@ -321,7 +317,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div id="overlay-btech" class="overlay">
@@ -463,13 +458,13 @@
                     img.style.cursor = "pointer";
                     img.style.border = "2px dashed #38bdf8";
                     img.onclick = function() {
-                        let url = prompt("Paste the URL of your image (or local file name like 'profile.jpg'):", this.src);
+                        let url = prompt("Paste the URL of your image (or local file name like 'profile.jpg.jpeg'):", this.src);
                         if(url) this.src = url;
                     }
                 } else {
                     img.style.border = "none";
+                    if(img.classList.contains('profile-img')) img.style.border = "4px solid #38bdf8";
                     img.onclick = null;
-                    if(img.classList.contains('profile-img')) img.style.border = "4px solid #38bdf8"; // Restore profile border
                 }
             });
 
