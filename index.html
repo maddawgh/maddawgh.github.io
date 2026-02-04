@@ -10,26 +10,23 @@
             --bg-color: #0f172a;
             --chain-color: #334155;
             --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.2);
             --card-bg: #1e293b;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
-            --gear-color: #475569;
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* MECHANICAL BLUEPRINT BACKGROUND */
+        /* BACKGROUND */
         body { 
             background-color: var(--bg-color); 
             color: var(--text-main); 
             overflow-x: hidden; 
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle, rgba(56,189,248,0.03) 1px, transparent 1px),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px, 100px 100px, 100px 100px;
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
         /* --- NAV BAR --- */
@@ -50,21 +47,20 @@
             padding: 20px;
         }
         .profile-gear-wrapper { position: relative; width: 220px; height: 220px; margin-bottom: 30px; display: flex; justify-content: center; align-items: center; }
-        .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 30s linear infinite; fill: var(--gear-color); opacity: 0.5; }
-        .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); z-index: 2; box-shadow: 0 0 40px var(--accent-glow); cursor: pointer; transition: 0.3s;}
+        .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 40s linear infinite; fill: #334155; opacity: 0.5; }
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); z-index: 2; box-shadow: 0 0 40px rgba(56, 189, 248, 0.4); cursor: pointer; transition: 0.3s;}
         .profile-img:hover { border-color: #fff; }
 
         h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; font-weight: 800; }
         .hero-sub { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; }
 
-        /* --- THE GEAR SYSTEM TIMELINE --- */
+        /* --- THE GEAR SYSTEM --- */
         .timeline-section { padding: 80px 20px; max-width: 1400px; margin: 0 auto; position: relative; }
 
-        /* 1. THE MOVING CHAIN */
+        /* 1. THE VERTICAL CHAIN */
         .chain-drive {
             position: absolute; left: 50%; top: 0; bottom: 0; width: 24px;
             transform: translateX(-50%);
-            /* Realistic Chain Links */
             background-image: linear-gradient(#334155 50%, transparent 50%);
             background-size: 100% 20px; 
             z-index: 0;
@@ -78,34 +74,37 @@
             margin-bottom: 120px; position: relative; z-index: 1;
         }
 
-        /* 3. SMALL PINION GEAR (12 Teeth - High Speed) */
+        /* 3. SMALL PINION GEAR (CENTER) */
         .pinion-gear {
             position: absolute; left: 50%; transform: translateX(-50%);
             width: 80px; height: 80px;
             z-index: 5;
             display: flex; justify-content: center; align-items: center;
-            /* Filter drop-shadow makes it pop */
-            filter: drop-shadow(0 0 5px #000);
+            /* No Background - Just the Gear */
         }
         
-        .pinion-svg { width: 100%; height: 100%; fill: #64748b; }
+        .pinion-svg { 
+            width: 100%; height: 100%; 
+            fill: #94a3b8; /* Lighter Grey */
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+        }
 
-        /* Pinion Rotation (4s per revolution) */
+        /* Pinion Rotation (Fast) */
         .timeline-row .pinion-svg { animation: spin 4s linear infinite; }
         .timeline-row.reverse .pinion-svg { animation: spin 4s linear infinite reverse; }
 
 
-        /* 4. LARGE CONTENT GEAR (36 Teeth - Low Speed - 3:1 Ratio) */
+        /* 4. LARGE CONTENT GEAR (SIDE) */
         .gear-card-container {
             width: 45%; height: 350px;
             position: relative;
             display: flex; align-items: center;
             cursor: pointer;
-            /* MESHING GAP: 
-               Pinion Radius (40px) + Large Gear Radius (160px) = 200px distance.
-               We adjust margin to ensure they touch perfectly. 
-            */
-            margin-left: 20px; 
+            
+            /* KEY FIX: Positive Margin to push it away from center */
+            /* Radius of Pinion (40px) + Radius of Large Gear (160px) = 200px approx center-to-center */
+            /* We use padding-left to push the large gear to the right side */
+            padding-left: 70px; 
         }
 
         /* The Spinning Teeth */
@@ -113,15 +112,15 @@
             position: absolute; width: 320px; height: 320px;
             z-index: 1; opacity: 1; left: 0;
             
-            /* REAL GEAR SVG (36 Teeth) */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23334155' d='M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z'/%3E%3C/svg%3E");
+            /* IMPROVED MACHINE GEAR SVG */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' stroke='%2338bdf8' stroke-width='1' d='M92 50c0-2.2-1.4-4-3.6-4.5l-4.5-.9c-.5-3.5-1.7-6.8-3.4-9.8l3.1-3.5c1.5-1.7 1.5-4.2-.1-5.7l-4.2-4.2c-1.5-1.5-4-1.5-5.7.1l-3.5 3.1c-3-1.7-6.3-2.9-9.8-3.4l-.9-4.5C58.9 14.4 57.2 13 55 13h-6c-2.2 0-4 1.4-4.5 3.6l-.9 4.5c-3.5.5-6.8 1.7-9.8 3.4l-3.5-3.1c-1.7-1.7-4.2-1.6-5.7-.1l-4.2 4.2c-1.6 1.6-1.6 4.1.1 5.7l3.1 3.5c-1.7 3-2.9 6.3-3.4 9.8l-4.5.9C13.4 46 12 47.8 12 50v6c0 2.2 1.4 4 3.6 4.5l4.5.9c.5 3.5 1.7 6.8 3.4 9.8l-3.1 3.5c-1.5 1.7-1.5 4.2.1 5.7l4.2 4.2c1.5 1.5 4 1.5 5.7-.1l3.5-3.1c3 1.7 6.3 2.9 9.8 3.4l.9 4.5c.5 2.2 2.2 3.6 4.5 3.6h6c2.2 0 4-1.4 4.5-3.6l.9-4.5c3.5-.5 6.8-1.7 9.8-3.4l3.5 3.1c1.7 1.7 4.2 1.6 5.7.1l4.2-4.2c1.6-1.6 1.6-4.1-.1-5.7l-3.1-3.5c1.7-3 2.9-6.3 3.4-9.8l4.5-.9c2.2-.5 3.6-2.2 3.6-4.5v-6z'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
             
-            /* Shadow for depth */
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+            /* Blue Glow Effect */
+            filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.3));
         }
 
-        /* Large Gear Rotation (12s per revolution - 3x slower than Pinion) */
+        /* Large Gear Rotation (12s - Slow/Heavy) */
         /* Right Side: Spins Opposite of Pinion (CCW) */
         .timeline-row .gear-teeth { animation: spin 12s linear infinite reverse; }
         /* Left Side: Spins Opposite of Pinion (CW) */
@@ -131,22 +130,22 @@
         /* The Static Hub (Text Content) */
         .gear-hub {
             position: absolute; z-index: 10;
-            width: 180px; height: 180px;
-            background: rgba(15, 23, 42, 0.98); /* Almost solid to read text */
-            border: 3px solid var(--accent);
+            width: 170px; height: 170px;
+            background: #0f172a; 
+            border: 2px solid var(--accent);
             border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             padding: 10px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+            box-shadow: inset 0 0 40px rgba(0,0,0,1);
             transition: transform 0.3s;
-            left: 70px; /* Centered visually inside the teeth */
+            left: 75px; /* Center inside the teeth */
         }
 
         /* Interactive Hover */
         .gear-card-container:hover .gear-teeth { filter: drop-shadow(0 0 15px var(--accent)); }
         .gear-card-container:hover .gear-hub { transform: scale(1.1); border-color: #fff; }
         
-        .gear-title { font-size: 1.1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px #000; }
+        .gear-title { font-size: 1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; line-height: 1.2; }
         .gear-cta { font-size: 0.7rem; color: var(--accent); font-weight: bold; margin-top: 5px; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px;}
 
         /* Narrative Text */
@@ -158,11 +157,11 @@
         
         /* Mesh Logic for Left Side */
         .timeline-row.reverse .gear-card-container { 
-            margin-left: 0; margin-right: 20px; /* Mesh gap */
+            padding-left: 0; padding-right: 70px; /* Push Left */
             justify-content: flex-end; 
         }
         .timeline-row.reverse .gear-teeth { left: auto; right: 0; }
-        .timeline-row.reverse .gear-hub { left: auto; right: 70px; }
+        .timeline-row.reverse .gear-hub { left: auto; right: 75px; }
 
 
         /* --- OVERLAYS --- */
@@ -198,7 +197,7 @@
         @media (max-width: 900px) {
             .chain-drive, .pinion-gear { display: none; }
             .timeline-row, .timeline-row.reverse { flex-direction: column; margin-left: 0; margin-bottom: 60px; }
-            .gear-card-container { width: 100%; height: 320px; margin: 0 !important; justify-content: center !important;}
+            .gear-card-container { width: 100%; height: 320px; padding: 0 !important; justify-content: center !important;}
             .gear-teeth { position: relative; left: auto; right: auto; }
             .gear-hub { left: auto; right: auto; }
             .narrative-text { width: 100%; text-align: center; margin-bottom: 20px; }
@@ -220,7 +219,7 @@
 
     <header>
         <div class="profile-gear-wrapper">
-            <svg class="profile-gear" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+            <svg class="profile-gear" viewBox="0 0 100 100"><path d="M92 50c0-2.2-1.4-4-3.6-4.5l-4.5-.9c-.5-3.5-1.7-6.8-3.4-9.8l3.1-3.5c1.5-1.7 1.5-4.2-.1-5.7l-4.2-4.2c-1.5-1.5-4-1.5-5.7.1l-3.5 3.1c-3-1.7-6.3-2.9-9.8-3.4l-.9-4.5C58.9 14.4 57.2 13 55 13h-6c-2.2 0-4 1.4-4.5 3.6l-.9 4.5c-3.5.5-6.8 1.7-9.8 3.4l-3.5-3.1c-1.7-1.7-4.2-1.6-5.7-.1l-4.2 4.2c-1.6 1.6-1.6 4.1.1 5.7l3.1 3.5c-1.7 3-2.9 6.3-3.4 9.8l-4.5.9C13.4 46 12 47.8 12 50v6c0 2.2 1.4 4 3.6 4.5l4.5.9c.5 3.5 1.7 6.8 3.4 9.8l-3.1 3.5c-1.5 1.7-1.5 4.2.1 5.7l4.2 4.2c1.5 1.5 4 1.5 5.7-.1l3.5-3.1c3 1.7 6.3 2.9 9.8 3.4l.9 4.5c.5 2.2 2.2 3.6 4.5 3.6h6c2.2 0 4-1.4 4.5-3.6l.9-4.5c3.5-.5 6.8-1.7 9.8-3.4l3.5 3.1c1.7 1.7 4.2 1.6 5.7.1l4.2-4.2c1.6-1.6 1.6-4.1-.1-5.7l-3.1-3.5c1.7-3 2.9-6.3 3.4-9.8l4.5-.9c2.2-.5 3.6-2.2 3.6-4.5v-6z"/></svg>
             <img src="profile.jpg" alt="Profile" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+Profile.jpg'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
@@ -236,7 +235,7 @@
             </div>
             
             <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
 
             <div class="gear-card-container" onclick="openOverlay('overlay-btech')">
@@ -253,7 +252,7 @@
                 Seeing a CT Scanner in operation shifted my focus. I pivoted to <strong>Medical Devices</strong> at Stevens.
             </div>
             <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
             <div class="gear-card-container" onclick="openOverlay('overlay-masters')">
                 <div class="gear-teeth"></div>
@@ -268,9 +267,7 @@
             <div class="narrative-text editable">
                 I've focused on manufacturability, reliability, and validation across Toyota and Stevens Labs.
             </div>
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
-            </div>
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-exp')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -284,9 +281,7 @@
             <div class="narrative-text editable">
                 Optimizing 3D printing parameters for an Exoskeleton and designing custom Lab Fixtures.
             </div>
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
-            </div>
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-projects')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
@@ -300,9 +295,7 @@
             <div class="narrative-text editable">
                 Curiosity doesn't stop in the lab. I explore the world through photography and design.
             </div>
-            <div class="pinion-gear">
-                <svg class="pinion-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
-            </div>
+            <div class="pinion-gear"><svg class="pinion-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg></div>
             <div class="gear-card-container" onclick="openOverlay('overlay-hobbies')">
                 <div class="gear-teeth"></div>
                 <div class="gear-hub">
