@@ -8,24 +8,20 @@
         /* --- CSS VARIABLES --- */
         :root {
             --bg-color: #0f172a;
-            --chain-color: #334155;
+            --line-color: #334155;
             --accent: #38bdf8;
-            --card-bg: #1e293b;
+            --gear-color: #e2e8f0; /* White/Light Grey like your image */
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* BACKGROUND */
         body { 
             background-color: var(--bg-color); 
             color: var(--text-main); 
             overflow-x: hidden; 
-            line-height: 1.6;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
@@ -43,868 +39,302 @@
 
         /* --- HERO --- */
         header {
-            min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 20px; margin-top: 70px;
+            min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            padding: 20px;
         }
-        .profile-gear-wrapper { position: relative; width: 220px; height: 220px; margin-bottom: 30px; display: flex; justify-content: center; align-items: center; }
-        .profile-gear { position: absolute; width: 100%; height: 100%; animation: spin 40s linear infinite; fill: #334155; opacity: 0.5; }
-        .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); z-index: 2; box-shadow: 0 0 40px rgba(56, 189, 248, 0.4); cursor: pointer; transition: 0.3s;}
-        .profile-img:hover { border-color: #fff; }
-
-        h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; }
+        .profile-container { position: relative; width: 200px; height: 200px; margin-bottom: 20px; }
+        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 6px solid var(--accent); box-shadow: 0 0 50px rgba(56,189,248,0.2); }
+        h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; font-weight: 800; }
         .hero-sub { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; }
 
-        /* --- THE GEAR SYSTEM --- */
-        .timeline-section { padding: 80px 20px; max-width: 1400px; margin: 0 auto; position: relative; }
+        /* --- TIMELINE SECTION --- */
+        .timeline-section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
 
-        /* 1. THE VERTICAL CHAIN */
-        .chain-drive {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 24px;
+        /* 1. THE VERTICAL SHAFT (Simple Rod) */
+        .center-line {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 10px;
             transform: translateX(-50%);
-            background-image: linear-gradient(#334155 50%, transparent 50%);
-            background-size: 100% 20px; 
+            background: var(--line-color);
             z-index: 0;
-            border-left: 4px solid #1e293b; border-right: 4px solid #1e293b;
-            animation: driveChain 1s linear infinite; 
+            border-radius: 5px;
         }
 
-        /* 2. TIMELINE ROWS */
-        .timeline-row {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin-bottom: 150px; 
-            position: relative; 
-            z-index: 1;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+        /* 2. THE ROW */
+        .gear-row {
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 120px; position: relative; height: 260px;
         }
 
-        /* 3. SMALL PINION GEAR (CENTER) - SIMPLE 2D */
-        .pinion-gear {
-            position: absolute; 
-            left: 50%; 
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px; 
-            height: 60px;
-            z-index: 5;
-        }
-        
-        .pinion-gear svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Pinion Rotation */
-        .timeline-row .pinion-gear { animation: spin 3s linear infinite; }
-        .timeline-row.reverse .pinion-gear { animation: spin 3s linear infinite reverse; }
-
-        /* 4. LARGE CONTENT GEAR - SIMPLE 2D FLAT */
-        .gear-card-container {
-            width: 320px;
-            height: 320px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        /* Right Side Positioning */
-        .timeline-row .gear-card-container {
-            margin-left: auto;
-            margin-right: 50px;
-        }
-
-        /* Left Side Positioning */
-        .timeline-row.reverse .gear-card-container {
-            margin-right: auto;
-            margin-left: 50px;
-        }
-
-        /* Gear SVG Container */
-        .gear-visual {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .gear-visual svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Large Gear Rotation */
-        .timeline-row .gear-visual { animation: spin 9s linear infinite reverse; }
-        .timeline-row.reverse .gear-visual { animation: spin 9s linear infinite; }
-
-        /* The Static Hub (Text Content) - PROPERLY CENTERED */
-        .gear-hub {
-            position: absolute; 
-            z-index: 10;
-            width: 180px; 
-            height: 180px;
-            background: #0f172a; 
-            border: 3px solid var(--accent);
+        /* 3. SMALL DRIVE GEAR (On the Line) */
+        .small-gear-container {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 80px;
+            z-index: 2;
+            background: var(--bg-color); /* Hide line behind gear */
             border-radius: 50%;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-            padding: 20px;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            transition: all 0.3s;
+            display: flex; justify-content: center; align-items: center;
+        }
+        
+        .small-gear-svg {
+            width: 100%; height: 100%;
+            fill: #64748b; /* Grey Color */
+            animation: spin 4s linear infinite;
         }
 
-        /* Hover Effects */
-        .gear-card-container:hover .gear-visual svg { filter: drop-shadow(0 0 15px var(--accent)); }
-        .gear-card-container:hover .gear-hub { 
-            transform: translate(-50%, -50%) scale(1.05); 
-            border-color: #fff;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
-        }
-        
-        .gear-title { 
-            font-size: 1rem; 
-            font-weight: 800; 
-            color: #fff; 
-            text-transform: uppercase; 
-            margin-bottom: 10px; 
-            line-height: 1.2;
-            letter-spacing: 0.5px;
-        }
-        
-        .gear-cta { 
-            font-size: 0.75rem; 
-            color: var(--accent); 
-            font-weight: bold; 
-            margin-top: 8px; 
-            border: 1.5px solid var(--accent); 
-            padding: 5px 16px; 
-            border-radius: 20px;
-            transition: 0.3s;
-        }
-        
-        .gear-card-container:hover .gear-cta {
-            background: var(--accent);
-            color: #0f172a;
+        /* 4. LARGE CONTENT GEAR (The Simple Mesh) */
+        .large-gear-container {
+            position: absolute;
+            /* ALIGNMENT MATH:
+               Small Radius (40px) + Large Radius (120px) = 160px distance.
+               Subtract 15px for tooth overlap (mesh).
+               Distance = 145px from center.
+            */
+            left: calc(50% + 135px); 
+            width: 240px; height: 240px;
+            z-index: 1;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        /* Narrative Text */
-        .narrative-text { 
-            flex: 1;
-            color: var(--text-muted); 
-            padding: 0 40px; 
-            font-size: 1.15rem; 
+        /* The SVG Shape */
+        .large-gear-svg {
+            position: absolute; width: 100%; height: 100%;
+            fill: var(--accent); /* Blue Color */
+            opacity: 0.1; /* Transparent look */
+            animation: spin 12s linear infinite reverse; /* Opposite direction */
+            transition: opacity 0.3s, fill 0.3s;
         }
-        
-        .timeline-row .narrative-text {
+
+        /* The Text inside the Gear */
+        .gear-content {
+            position: relative; z-index: 5;
+            text-align: center; pointer-events: none;
+        }
+        .gear-title { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; color: #fff; line-height: 1.1; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .gear-btn { font-size: 0.75rem; background: var(--accent); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; display: inline-block; }
+
+        /* HOVER EFFECT */
+        .large-gear-container:hover { transform: scale(1.1); }
+        .large-gear-container:hover .large-gear-svg { opacity: 1; fill: #1e293b; stroke: var(--accent); stroke-width: 2px; }
+
+        /* 5. REVERSE LAYOUT (Left Side) */
+        .gear-row.reverse .large-gear-container {
+            left: auto;
+            right: calc(50% + 135px); /* Same distance to the left */
+        }
+        .gear-row.reverse .small-gear-svg { animation-direction: reverse; }
+        .gear-row.reverse .large-gear-svg { animation-direction: normal; }
+
+        /* NARRATIVE TEXT */
+        .narrative-text {
+            position: absolute;
+            width: 300px;
+            right: calc(50% + 160px); /* Push to left side */
             text-align: right;
-            padding-right: 60px;
+            color: var(--text-muted); font-size: 1.1rem;
         }
-        
-        /* REVERSE LAYOUT (Left Side Gears) */
-        .timeline-row.reverse { 
-            flex-direction: row-reverse; 
+        .gear-row.reverse .narrative-text {
+            right: auto; left: calc(50% + 160px); /* Push to right side */
+            text-align: left;
         }
-        
-        .timeline-row.reverse .narrative-text { 
-            text-align: left; 
-            padding-left: 60px;
-            padding-right: 40px;
-        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- OVERLAYS --- */
-        .overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(11, 17, 32, 0.98); 
-            z-index: 2000; 
-            display: none; 
-            overflow-y: auto; 
-            opacity: 0; 
-            transition: opacity 0.4s; 
-        }
-        .overlay.active { display: block; opacity: 1; }
-        .overlay-content { 
-            max-width: 900px; 
-            margin: 100px auto 60px; 
-            padding: 40px; 
-            animation: slideUp 0.5s ease; 
-        }
-        .overlay-content h2 {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 15px;
-        }
-        .overlay-content h3 {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        .overlay-content p, .overlay-content li {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-        .overlay-content ul {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-        .overlay-content strong {
-            color: var(--text-main);
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); z-index: 2000; display: none; overflow-y: auto; }
+        .overlay.active { display: block; animation: fadeIn 0.3s; }
+        .overlay-content { max-width: 800px; margin: 80px auto; padding: 40px 20px; }
+        .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: #fff; cursor: pointer; }
         
-        .close-btn { 
-            position: fixed; 
-            top: 30px; 
-            right: 40px; 
-            font-size: 3rem; 
-            color: var(--text-muted); 
-            cursor: pointer; 
-            z-index: 2001;
-            transition: 0.3s;
-        }
-        .close-btn:hover {
-            color: var(--accent);
-            transform: rotate(90deg);
-        }
-        
-        .visual-placeholder { 
-            width: 100%; 
-            height: 300px; 
-            background: #1e293b; 
-            border: 1px dashed #475569; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #64748b; 
-            margin-top: 20px; 
-            cursor: pointer; 
-            position: relative;
-            border-radius: 8px;
-        }
-        .visual-placeholder::after { 
-            content: 'Click to Add Image'; 
-            position: absolute; 
-            bottom: 10px; 
-            right: 10px; 
-            font-size: 0.8rem; 
-            opacity: 0.5;
-        }
-        .visual-img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            border-radius: 8px;
-        }
+        .visual-box { width: 100%; height: 300px; background: #334155; display: flex; justify-content: center; align-items: center; border-radius: 10px; margin-top: 20px; cursor: pointer; border: 2px dashed #64748b; color: #94a3b8; }
+        .visual-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
 
-        /* DEV TOOLS */
-        .dev-tools {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            gap: 10px;
-            z-index: 5000;
-        }
-        .dev-btn {
-            background: var(--accent);
-            color: #000;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-            transition: 0.3s;
-        }
-        .dev-btn:hover {
-            background: #fff;
-            transform: translateY(-2px);
-        }
-        
-        .code-export-box { 
-            position: fixed; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            width: 80%; 
-            height: 70%; 
-            background: #0f172a; 
-            border: 2px solid var(--accent); 
-            z-index: 6000; 
-            padding: 20px; 
-            display: none; 
-            flex-direction: column;
-            border-radius: 10px;
-        }
-        .code-export-box textarea { 
-            width: 100%; 
-            height: 90%; 
-            background: #1e293b; 
-            color: #fff; 
-            padding: 10px; 
-            margin-bottom: 10px;
-            border: 1px solid #475569;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-        }
-        
-        .editable[contenteditable="true"] { 
-            border: 1px dashed var(--accent); 
-            background: rgba(56,189,248,0.1); 
-            padding: 2px;
-        }
+        /* EDIT BUTTON */
+        .edit-fab { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 12px 24px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 5000; }
+        .code-export-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 70%; background: #0f172a; border: 2px solid var(--accent); z-index: 6000; padding: 20px; display: none; flex-direction: column; }
+        .code-export-box textarea { width: 100%; height: 90%; background: #1e293b; color: #fff; padding: 10px; margin-bottom:10px; }
+        .editable[contenteditable="true"] { border: 1px dashed var(--accent); background: rgba(56,189,248,0.1); }
 
-        /* KEYFRAMES */
-        @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 20px; } }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* MOBILE RESPONSIVE */
+        /* MOBILE */
         @media (max-width: 900px) {
-            .chain-drive, .pinion-gear { display: none; }
-            .timeline-row, .timeline-row.reverse { 
-                flex-direction: column; 
-                margin-bottom: 80px; 
-            }
-            .gear-card-container { 
-                width: 280px !important;
-                height: 280px !important;
-                margin: 0 auto !important;
-            }
-            .narrative-text { 
-                width: 100%; 
-                text-align: center !important; 
-                margin-bottom: 30px; 
-                padding: 0 20px !important;
-            }
-            h1 { font-size: 2.5rem; }
-            .hero-sub { font-size: 1rem; }
-            nav { padding: 0 20px; }
-            .nav-links { gap: 15px; }
-            .nav-item { font-size: 0.7rem; }
+            .center-line, .small-gear-container { display: none; }
+            .gear-row, .gear-row.reverse { flex-direction: column; height: auto; margin-bottom: 60px; }
+            .large-gear-container, .gear-row.reverse .large-gear-container { position: relative; left: auto; right: auto; margin-bottom: 20px; }
+            .narrative-text, .gear-row.reverse .narrative-text { position: relative; width: 100%; right: auto; left: auto; text-align: center; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-logo">Jayanth<span style="color:#fff">Gowda</span></div>
+        <div class="nav-logo">JAYANTH</div>
         <div class="nav-links">
             <div class="nav-item" onclick="openOverlay('overlay-btech')">Origin</div>
             <div class="nav-item" onclick="openOverlay('overlay-masters')">Masters</div>
             <div class="nav-item" onclick="openOverlay('overlay-exp')">Experience</div>
             <div class="nav-item" onclick="openOverlay('overlay-projects')">Projects</div>
-            <div class="nav-item" onclick="openOverlay('overlay-hobbies')">Hobbies</div>
         </div>
     </nav>
 
     <header>
-        <div class="profile-gear-wrapper">
-            <svg class="profile-gear" viewBox="0 0 100 100">
-                <path d="M92 50c0-2.2-1.4-4-3.6-4.5l-4.5-.9c-.5-3.5-1.7-6.8-3.4-9.8l3.1-3.5c1.5-1.7 1.5-4.2-.1-5.7l-4.2-4.2c-1.5-1.5-4-1.5-5.7.1l-3.5 3.1c-3-1.7-6.3-2.9-9.8-3.4l-.9-4.5C58.9 14.4 57.2 13 55 13h-6c-2.2 0-4 1.4-4.5 3.6l-.9 4.5c-3.5.5-6.8 1.7-9.8 3.4l-3.5-3.1c-1.7-1.7-4.2-1.6-5.7-.1l-4.2 4.2c-1.6 1.6-1.6 4.1.1 5.7l3.1 3.5c-1.7 3-2.9 6.3-3.4 9.8l-4.5.9C13.4 46 12 47.8 12 50v6c0 2.2 1.4 4 3.6 4.5l4.5.9c.5 3.5 1.7 6.8 3.4 9.8l-3.1 3.5c-1.5 1.7-1.5 4.2.1 5.7l4.2 4.2c1.5 1.5 4 1.5 5.7-.1l3.5-3.1c3 1.7 6.3 2.9 9.8 3.4l.9 4.5c.5 2.2 2.2 3.6 4.5 3.6h6c2.2 0 4-1.4 4.5-3.6l.9-4.5c3.5-.5 6.8-1.7 9.8-3.4l3.5 3.1c1.7 1.7 4.2 1.6 5.7.1l4.2-4.2c1.6-1.6 1.6-4.1-.1-5.7l-3.1-3.5c1.7-3 2.9-6.3 3.4-9.8l4.5-.9c2.2-.5 3.6-2.2 3.6-4.5v-6z"/>
-            </svg>
-            <img src="profile.jpg" alt="Profile" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150/0f172a/38bdf8?text=JG'">
+        <div class="profile-container">
+            <img src="profile.jpg" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/200?text=Upload+Photo'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
-        <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>Building FDA-compliant healthcare solutions.</p>
+        <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design</p>
     </header>
 
     <div class="timeline-section">
-        <div class="chain-drive"></div>
+        <div class="center-line"></div>
 
-        <!-- ROW 1: Bachelor's -->
-        <div class="timeline-row">
+        <div class="gear-row">
             <div class="narrative-text editable">
-                I started in science to understand how things work. I chose <strong>Mechanical Engineering</strong> to design real systems.
+                I chose Mechanical Engineering to understand how things work at a fundamental level.
             </div>
             
-            <div class="pinion-gear">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#475569" stroke="#64748b" stroke-width="2"/>
-                    <polygon points="50,10 45,30 55,30" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,23 68,35 75,42" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="90,50 70,50 70,60" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,77 75,58 68,65" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="50,90 55,70 45,70" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,77 32,65 25,58" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="10,50 30,50 30,40" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,23 25,42 32,35" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                </svg>
+            <div class="small-gear-container">
+                <svg class="small-gear-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
 
-            <div class="gear-card-container" onclick="openOverlay('overlay-btech')">
-                <div class="gear-visual">
-                    <svg viewBox="0 0 200 200">
-                        <!-- Large Gear with 24 Teeth -->
-                        <circle cx="100" cy="100" r="90" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                        <!-- Teeth around perimeter -->
-                        <g fill="#1e293b" stroke="#38bdf8" stroke-width="1.5">
-                            <polygon points="100,10 95,25 105,25"/>
-                            <polygon points="130,13 127,28 133,30"/>
-                            <polygon points="158,22 157,37 163,40"/>
-                            <polygon points="178,40 180,55 185,58"/>
-                            <polygon points="190,65 195,78 198,83"/>
-                            <polygon points="195,92 200,105 200,110"/>
-                            <polygon points="190,120 198,130 195,138"/>
-                            <polygon points="178,148 185,155 180,162"/>
-                            <polygon points="158,165 163,170 157,178"/>
-                            <polygon points="130,175 133,180 127,187"/>
-                            <polygon points="100,180 105,190 95,190"/>
-                            <polygon points="70,175 73,187 67,180"/>
-                            <polygon points="42,165 43,178 37,170"/>
-                            <polygon points="22,148 20,162 15,155"/>
-                            <polygon points="10,120 5,138 2,130"/>
-                            <polygon points="5,92 0,110 0,105"/>
-                            <polygon points="10,65 2,83 5,78"/>
-                            <polygon points="22,40 15,58 20,55"/>
-                            <polygon points="42,22 37,40 43,37"/>
-                            <polygon points="70,13 67,30 73,28"/>
-                        </g>
-                        <circle cx="100" cy="100" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                    </svg>
-                </div>
-                <div class="gear-hub">
-                    <div class="gear-title editable">Bachelors Foundation</div>
-                    <div class="gear-cta">Inspect</div>
+            <div class="large-gear-container" onclick="openOverlay('overlay-btech')">
+                <svg class="large-gear-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l-4.5 4.5c-1.6 1.6-1.7 4.3-.1 6l3.6 4c-1.9 3.3-3.2 6.9-3.7 10.7l-5.3 1C7.2 45.7 5.6 47.7 5.6 50v8c0 2.3 1.6 4.3 3.9 4.7l5.3 1c.6 3.8 1.9 7.4 3.7 10.7l-3.6 4c-1.6 1.7-1.6 4.4.1 6l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <div class="gear-content">
+                    <div class="gear-title editable">BACHELORS<br>FOUNDATION</div>
+                    <div class="gear-btn">INSPECT</div>
                 </div>
             </div>
         </div>
 
-        <!-- ROW 2: Master's -->
-        <div class="timeline-row reverse">
+        <div class="gear-row reverse">
             <div class="narrative-text editable">
-                Seeing a CT Scanner in operation shifted my focus. I pivoted to <strong>Medical Devices</strong> at Stevens.
+                Seeing a CT Scanner in action pivoted my focus to Medical Devices at Stevens.
             </div>
             
-            <div class="pinion-gear">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#475569" stroke="#64748b" stroke-width="2"/>
-                    <polygon points="50,10 45,30 55,30" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,23 68,35 75,42" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="90,50 70,50 70,60" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,77 75,58 68,65" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="50,90 55,70 45,70" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,77 32,65 25,58" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="10,50 30,50 30,40" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,23 25,42 32,35" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                </svg>
+            <div class="small-gear-container">
+                <svg class="small-gear-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
 
-            <div class="gear-card-container" onclick="openOverlay('overlay-masters')">
-                <div class="gear-visual">
-                    <svg viewBox="0 0 200 200">
-                        <circle cx="100" cy="100" r="90" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                        <g fill="#1e293b" stroke="#38bdf8" stroke-width="1.5">
-                            <polygon points="100,10 95,25 105,25"/>
-                            <polygon points="130,13 127,28 133,30"/>
-                            <polygon points="158,22 157,37 163,40"/>
-                            <polygon points="178,40 180,55 185,58"/>
-                            <polygon points="190,65 195,78 198,83"/>
-                            <polygon points="195,92 200,105 200,110"/>
-                            <polygon points="190,120 198,130 195,138"/>
-                            <polygon points="178,148 185,155 180,162"/>
-                            <polygon points="158,165 163,170 157,178"/>
-                            <polygon points="130,175 133,180 127,187"/>
-                            <polygon points="100,180 105,190 95,190"/>
-                            <polygon points="70,175 73,187 67,180"/>
-                            <polygon points="42,165 43,178 37,170"/>
-                            <polygon points="22,148 20,162 15,155"/>
-                            <polygon points="10,120 5,138 2,130"/>
-                            <polygon points="5,92 0,110 0,105"/>
-                            <polygon points="10,65 2,83 5,78"/>
-                            <polygon points="22,40 15,58 20,55"/>
-                            <polygon points="42,22 37,40 43,37"/>
-                            <polygon points="70,13 67,30 73,28"/>
-                        </g>
-                        <circle cx="100" cy="100" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                    </svg>
-                </div>
-                <div class="gear-hub">
-                    <div class="gear-title editable">Masters at Stevens</div>
-                    <div class="gear-cta">Inspect</div>
+            <div class="large-gear-container" onclick="openOverlay('overlay-masters')">
+                <svg class="large-gear-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c-1.7-1.6-4.4-1.6-6 .1l4.5 4.5c1.6 1.6 4.3 1.7 6 .1l4-3.6c3.3 1.9 6.9 3.2 10.7 3.7l1 5.3c.4 2.3 2.4 3.9 4.7 3.9h8c2.3 0 4.3-1.6 4.7-3.9l1-5.3c3.8-.6 7.4-1.9 10.7-3.7l4 3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <div class="gear-content">
+                    <div class="gear-title editable">MASTERS<br>SPECIALIZATION</div>
+                    <div class="gear-btn">INSPECT</div>
                 </div>
             </div>
         </div>
 
-        <!-- ROW 3: Experience -->
-        <div class="timeline-row">
+        <div class="gear-row">
             <div class="narrative-text editable">
-                I've focused on manufacturability, reliability, and validation across Toyota and Stevens Labs.
+                Focused on manufacturability and validation at Toyota and Stevens Labs.
             </div>
             
-            <div class="pinion-gear">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#475569" stroke="#64748b" stroke-width="2"/>
-                    <polygon points="50,10 45,30 55,30" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,23 68,35 75,42" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="90,50 70,50 70,60" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,77 75,58 68,65" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="50,90 55,70 45,70" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,77 32,65 25,58" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="10,50 30,50 30,40" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,23 25,42 32,35" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                </svg>
+            <div class="small-gear-container">
+                <svg class="small-gear-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
 
-            <div class="gear-card-container" onclick="openOverlay('overlay-exp')">
-                <div class="gear-visual">
-                    <svg viewBox="0 0 200 200">
-                        <circle cx="100" cy="100" r="90" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                        <g fill="#1e293b" stroke="#38bdf8" stroke-width="1.5">
-                            <polygon points="100,10 95,25 105,25"/>
-                            <polygon points="130,13 127,28 133,30"/>
-                            <polygon points="158,22 157,37 163,40"/>
-                            <polygon points="178,40 180,55 185,58"/>
-                            <polygon points="190,65 195,78 198,83"/>
-                            <polygon points="195,92 200,105 200,110"/>
-                            <polygon points="190,120 198,130 195,138"/>
-                            <polygon points="178,148 185,155 180,162"/>
-                            <polygon points="158,165 163,170 157,178"/>
-                            <polygon points="130,175 133,180 127,187"/>
-                            <polygon points="100,180 105,190 95,190"/>
-                            <polygon points="70,175 73,187 67,180"/>
-                            <polygon points="42,165 43,178 37,170"/>
-                            <polygon points="22,148 20,162 15,155"/>
-                            <polygon points="10,120 5,138 2,130"/>
-                            <polygon points="5,92 0,110 0,105"/>
-                            <polygon points="10,65 2,83 5,78"/>
-                            <polygon points="22,40 15,58 20,55"/>
-                            <polygon points="42,22 37,40 43,37"/>
-                            <polygon points="70,13 67,30 73,28"/>
-                        </g>
-                        <circle cx="100" cy="100" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                    </svg>
-                </div>
-                <div class="gear-hub">
-                    <div class="gear-title editable">Experience</div>
-                    <div class="gear-cta">Inspect</div>
+            <div class="large-gear-container" onclick="openOverlay('overlay-exp')">
+                <svg class="large-gear-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <div class="gear-content">
+                    <div class="gear-title editable">PROFESSIONAL<br>EXPERIENCE</div>
+                    <div class="gear-btn">INSPECT</div>
                 </div>
             </div>
         </div>
 
-        <!-- ROW 4: Projects -->
-        <div class="timeline-row reverse">
+        <div class="gear-row reverse">
             <div class="narrative-text editable">
-                Optimizing 3D printing parameters for an Exoskeleton and designing custom Lab Fixtures.
+                Optimizing 3D printing for Exoskeletons and designing custom Lab Fixtures.
             </div>
             
-            <div class="pinion-gear">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#475569" stroke="#64748b" stroke-width="2"/>
-                    <polygon points="50,10 45,30 55,30" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,23 68,35 75,42" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="90,50 70,50 70,60" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,77 75,58 68,65" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="50,90 55,70 45,70" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,77 32,65 25,58" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="10,50 30,50 30,40" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,23 25,42 32,35" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                </svg>
+            <div class="small-gear-container">
+                <svg class="small-gear-svg" viewBox="0 0 100 100"><path d="M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8 4.9l-6.1-5.2c-2.2-1.9-5.6-1.8-7.7.4l-5.6 5.6c-2.1 2.1-2.2 5.5-.4 7.7l5.2 6.1c-2.4 3.6-4.1 7.6-4.9 11.8l-7.4 1.6C1.9 45.5 0 47.9 0 50.7v8c0 2.8 1.9 5.2 4.6 5.8l7.4 1.6c.8 4.2 2.5 8.2 4.9 11.8l-5.2 6.1c-1.9 2.2-1.8 5.6.4 7.7l5.6 5.6c2.1 2.1 5.5 2.2 7.7.4l6.1-5.2c3.6 2.4 7.6 4.1 11.8 4.9l1.6 7.4c.6 2.7 3 4.6 5.8 4.6h8c2.8 0 5.2-1.9 5.8-4.6l1.6-7.4c4.2-.8 8.2-2.5 11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z"/></svg>
             </div>
 
-            <div class="gear-card-container" onclick="openOverlay('overlay-projects')">
-                <div class="gear-visual">
-                    <svg viewBox="0 0 200 200">
-                        <circle cx="100" cy="100" r="90" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                        <g fill="#1e293b" stroke="#38bdf8" stroke-width="1.5">
-                            <polygon points="100,10 95,25 105,25"/>
-                            <polygon points="130,13 127,28 133,30"/>
-                            <polygon points="158,22 157,37 163,40"/>
-                            <polygon points="178,40 180,55 185,58"/>
-                            <polygon points="190,65 195,78 198,83"/>
-                            <polygon points="195,92 200,105 200,110"/>
-                            <polygon points="190,120 198,130 195,138"/>
-                            <polygon points="178,148 185,155 180,162"/>
-                            <polygon points="158,165 163,170 157,178"/>
-                            <polygon points="130,175 133,180 127,187"/>
-                            <polygon points="100,180 105,190 95,190"/>
-                            <polygon points="70,175 73,187 67,180"/>
-                            <polygon points="42,165 43,178 37,170"/>
-                            <polygon points="22,148 20,162 15,155"/>
-                            <polygon points="10,120 5,138 2,130"/>
-                            <polygon points="5,92 0,110 0,105"/>
-                            <polygon points="10,65 2,83 5,78"/>
-                            <polygon points="22,40 15,58 20,55"/>
-                            <polygon points="42,22 37,40 43,37"/>
-                            <polygon points="70,13 67,30 73,28"/>
-                        </g>
-                        <circle cx="100" cy="100" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                    </svg>
-                </div>
-                <div class="gear-hub">
-                    <div class="gear-title editable">Projects</div>
-                    <div class="gear-cta">Inspect</div>
+            <div class="large-gear-container" onclick="openOverlay('overlay-projects')">
+                <svg class="large-gear-svg" viewBox="0 0 100 100"><path d="M94.4 50c0-2.3-1.6-4.3-3.9-4.7l-5.3-1c-.6-3.8-1.9-7.4-3.7-10.7l3.6-4c1.6-1.7 1.6-4.4-.1-6l-4.5-4.5c-1.6-1.6-4.3-1.7-6-.1l-4 3.6c-3.3-1.9-6.9-3.2-10.7-3.7l-1-5.3C58.3 11.2 56.3 9.6 54 9.6h-8c-2.3 0-4.3 1.6-4.7 3.9l-1 5.3c-3.8.6-7.4 1.9-10.7 3.7l-4-3.6c1.7 1.6 4.4 1.6 6-.1l4.5-4.5c1.6-1.6 1.7-4.3.1-6l-3.6-4c1.9-3.3 3.2-6.9 3.7-10.7l5.3-1c2.3-.4 3.9-2.4 3.9-4.7v-8zm-44.4 17c-9.4 0-17-7.6-17-17s7.6-17 17-17 17 7.6 17 17-7.6 17-17 17z"/></svg>
+                <div class="gear-content">
+                    <div class="gear-title editable">PROJECTS<br>& HOBBIES</div>
+                    <div class="gear-btn">INSPECT</div>
                 </div>
             </div>
         </div>
 
-        <!-- ROW 5: Hobbies -->
-        <div class="timeline-row">
-            <div class="narrative-text editable">
-                Curiosity doesn't stop in the lab. I explore the world through photography and design.
-            </div>
-            
-            <div class="pinion-gear">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#475569" stroke="#64748b" stroke-width="2"/>
-                    <polygon points="50,10 45,30 55,30" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,23 68,35 75,42" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="90,50 70,50 70,60" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="80,77 75,58 68,65" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="50,90 55,70 45,70" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,77 32,65 25,58" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="10,50 30,50 30,40" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                    <polygon points="20,23 25,42 32,35" fill="#64748b" stroke="#38bdf8" stroke-width="1"/>
-                </svg>
-            </div>
-
-            <div class="gear-card-container" onclick="openOverlay('overlay-hobbies')">
-                <div class="gear-visual">
-                    <svg viewBox="0 0 200 200">
-                        <circle cx="100" cy="100" r="90" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                        <g fill="#1e293b" stroke="#38bdf8" stroke-width="1.5">
-                            <polygon points="100,10 95,25 105,25"/>
-                            <polygon points="130,13 127,28 133,30"/>
-                            <polygon points="158,22 157,37 163,40"/>
-                            <polygon points="178,40 180,55 185,58"/>
-                            <polygon points="190,65 195,78 198,83"/>
-                            <polygon points="195,92 200,105 200,110"/>
-                            <polygon points="190,120 198,130 195,138"/>
-                            <polygon points="178,148 185,155 180,162"/>
-                            <polygon points="158,165 163,170 157,178"/>
-                            <polygon points="130,175 133,180 127,187"/>
-                            <polygon points="100,180 105,190 95,190"/>
-                            <polygon points="70,175 73,187 67,180"/>
-                            <polygon points="42,165 43,178 37,170"/>
-                            <polygon points="22,148 20,162 15,155"/>
-                            <polygon points="10,120 5,138 2,130"/>
-                            <polygon points="5,92 0,110 0,105"/>
-                            <polygon points="10,65 2,83 5,78"/>
-                            <polygon points="22,40 15,58 20,55"/>
-                            <polygon points="42,22 37,40 43,37"/>
-                            <polygon points="70,13 67,30 73,28"/>
-                        </g>
-                        <circle cx="100" cy="100" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                    </svg>
-                </div>
-                <div class="gear-hub">
-                    <div class="gear-title editable">Hobbies</div>
-                    <div class="gear-cta">Inspect</div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <!-- OVERLAYS -->
     <div id="overlay-btech" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-btech')">×</div>
+        <div class="close-btn" onclick="document.getElementById('overlay-btech').classList.remove('active')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">B.Tech in Mechanical Engineering</h2>
-            <h3 class="editable">Foundation Years</h3>
-            <p class="editable">My engineering journey started with a deep curiosity about how mechanical systems work. During my bachelor's degree, I built a strong foundation in:</p>
-            <ul>
-                <li class="editable"><strong>Thermodynamics & Fluid Mechanics</strong> - Understanding energy transfer and flow behavior</li>
-                <li class="editable"><strong>Machine Design & Manufacturing</strong> - Learning design principles and production processes</li>
-                <li class="editable"><strong>Materials Science</strong> - Studying material properties and selection criteria</li>
-                <li class="editable"><strong>CAD/CAM</strong> - Developing proficiency in SolidWorks and AutoCAD</li>
-            </ul>
-            <h3 class="editable">Key Projects</h3>
-            <p class="editable">Completed capstone project on <strong>hydraulic system optimization</strong>, which sparked my interest in applying engineering principles to solve real-world problems.</p>
-            <div class="visual-placeholder image-editable" onclick="editImage(this)">
-                <span style="font-size: 4rem;">🎓</span>
-                <div>Add Bachelor's Graduation Photo</div>
-            </div>
+            <h2 class="editable">B.Tech Mechanical Engineering</h2>
+            <div class="visual-box image-editable" onclick="editImage(this)"><img src="" class="visual-img" onerror="this.style.display='none'"><span style="position:absolute">Click to Add Visual</span></div>
+            <p class="editable">Presidency University (2019-2023). Focus on Thermodynamics and Manufacturing.</p>
         </div>
     </div>
 
     <div id="overlay-masters" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
+        <div class="close-btn" onclick="document.getElementById('overlay-masters').classList.remove('active')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">Master's in Mechanical Engineering (Medical Devices)</h2>
-            <h3 class="editable">Stevens Institute of Technology</h3>
-            <p class="editable">Witnessing a CT scanner in operation was a transformative moment. I realized that medical devices represent the perfect intersection of precision engineering and human impact. At Stevens, I specialized in:</p>
-            <ul>
-                <li class="editable"><strong>FDA Regulatory Compliance</strong> - ISO 13485 & CFR 820 quality systems</li>
-                <li class="editable"><strong>Biomedical Instrumentation</strong> - Understanding diagnostic imaging and therapeutic devices</li>
-                <li class="editable"><strong>Design Controls & Verification</strong> - Applying V&V methodologies for medical applications</li>
-                <li class="editable"><strong>Risk Management (ISO 14971)</strong> - Identifying and mitigating device-related hazards</li>
-                <li class="editable"><strong>Human Factors Engineering</strong> - Designing for usability and safety</li>
-            </ul>
-            <h3 class="editable">Research Focus</h3>
-            <p class="editable">My thesis explored <strong>additive manufacturing for customized medical implants</strong>, investigating how 3D printing parameters affect mechanical properties and biocompatibility.</p>
-            <div class="visual-placeholder image-editable" onclick="editImage(this)">
-                <span style="font-size: 4rem;">🏥</span>
-                <div>Add Stevens Campus or Lab Photo</div>
-            </div>
+            <h2 class="editable">Masters at Stevens</h2>
+            <div class="visual-box image-editable" onclick="editImage(this)"><img src="" class="visual-img" onerror="this.style.display='none'"><span style="position:absolute">Click to Add Visual</span></div>
+            <p class="editable">Medical Device Design, FDA 510(k), ISO 13485, CAPA.</p>
         </div>
     </div>
 
     <div id="overlay-exp" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-exp')">×</div>
+        <div class="close-btn" onclick="document.getElementById('overlay-exp').classList.remove('active')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">Professional Experience</h2>
-            <h3 class="editable">Toyota Manufacturing Intern</h3>
-            <p class="editable">Gained hands-on experience in <strong>lean manufacturing</strong> and <strong>quality assurance</strong>:</p>
-            <ul>
-                <li class="editable">Participated in kaizen initiatives to reduce production defects by 15%</li>
-                <li class="editable">Conducted root cause analysis using 5-Why and fishbone diagrams</li>
-                <li class="editable">Assisted in assembly line optimization and ergonomic assessments</li>
-                <li class="editable">Learned FMEA (Failure Mode Effects Analysis) for risk mitigation</li>
-            </ul>
-            <h3 class="editable">Stevens Research Labs - Graduate Assistant</h3>
-            <p class="editable">Supported research in <strong>biomechanics and medical device testing</strong>:</p>
-            <ul>
-                <li class="editable">Designed and fabricated custom test fixtures for prosthetic validation</li>
-                <li class="editable">Performed mechanical testing (tensile, compression, fatigue) per ASTM standards</li>
-                <li class="editable">Operated 3D printers (FDM, SLA) and CNC machines for prototype development</li>
-                <li class="editable">Documented experimental procedures and maintained lab equipment</li>
-            </ul>
-            <div class="visual-placeholder image-editable" onclick="editImage(this)">
-                <span style="font-size: 4rem;">⚙️</span>
-                <div>Add Lab Equipment or Manufacturing Floor Photo</div>
-            </div>
+            <h2 class="editable">Experience</h2>
+            <div class="visual-box image-editable" onclick="editImage(this)"><img src="" class="visual-img" onerror="this.style.display='none'"><span style="position:absolute">Click to Add Visual</span></div>
+            <p class="editable">Stevens Lab Lead | TD Power Systems | Toyota Kirloskar.</p>
         </div>
     </div>
 
     <div id="overlay-projects" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-projects')">×</div>
+        <div class="close-btn" onclick="document.getElementById('overlay-projects').classList.remove('active')">×</div>
         <div class="overlay-content">
-            <h2 class="editable">Featured Projects</h2>
-            <h3 class="editable">Lower Limb Exoskeleton Optimization</h3>
-            <p class="editable">Investigated 3D printing parameters to improve mechanical strength of exoskeleton components:</p>
-            <ul>
-                <li class="editable">Conducted DOE (Design of Experiments) varying layer height, infill density, and print orientation</li>
-                <li class="editable">Performed tensile testing on 50+ samples to identify optimal print settings</li>
-                <li class="editable">Achieved 22% increase in load-bearing capacity while reducing weight by 8%</li>
-                <li class="editable">Collaborated with physical therapy team to incorporate clinical feedback</li>
-            </ul>
-            <h3 class="editable">Custom Lab Fixture Design</h3>
-            <p class="editable">Designed modular fixtures for biomechanical testing of orthopedic implants:</p>
-            <ul>
-                <li class="editable">Created CAD models in SolidWorks with parametric design for adjustability</li>
-                <li class="editable">Manufactured fixtures using CNC milling and 3D printing</li>
-                <li class="editable">Validated fixture accuracy and repeatability per ISO 7500-1 standards</li>
-                <li class="editable">Reduced setup time for experiments by 40%</li>
-            </ul>
-            <h3 class="editable">FDA Submission Package (Academic Project)</h3>
-            <p class="editable">Developed complete 510(k) submission for a Class II orthopedic device, including Design History File, risk analysis, and biocompatibility testing strategy.</p>
-            <div class="visual-placeholder image-editable" onclick="editImage(this)">
-                <span style="font-size: 4rem;">🔬</span>
-                <div>Add Project Photos (Exoskeleton, Fixtures, CAD Models)</div>
-            </div>
+            <h2 class="editable">Projects & Hobbies</h2>
+            <div class="visual-box image-editable" onclick="editImage(this)"><img src="" class="visual-img" onerror="this.style.display='none'"><span style="position:absolute">Click to Add Visual</span></div>
+            <p class="editable">Exoskeleton Design, 3D Printing, Photography.</p>
         </div>
     </div>
 
-    <div id="overlay-hobbies" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-hobbies')">×</div>
-        <div class="overlay-content">
-            <h2 class="editable">Beyond Engineering</h2>
-            <h3 class="editable">Photography</h3>
-            <p class="editable">I explore the world through my lens, capturing mechanical systems, architecture, and nature. Photography teaches me to observe details—a skill that translates directly to engineering analysis.</p>
-            <h3 class="editable">UI/UX Design</h3>
-            <p class="editable">Designing interfaces and digital experiences helps me understand human-centered design principles, which are critical for medical device usability.</p>
-            <h3 class="editable">Continuous Learning</h3>
-            <p class="editable">Currently exploring:</p>
-            <ul>
-                <li class="editable"><strong>Cyclotron Technology</strong> - Particle accelerators for PET radioisotope production</li>
-                <li class="editable"><strong>Python & Docker</strong> - Building automation tools for engineering workflows</li>
-                <li class="editable"><strong>Nuclear Physics</strong> - Understanding isotope production and decay processes</li>
-            </ul>
-            <div class="visual-placeholder image-editable" onclick="editImage(this)">
-                <span style="font-size: 4rem;">📸</span>
-                <div>Add Photography Portfolio or Hobby Photos</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- DEV TOOLS -->
-    <div class="dev-tools">
-        <button class="dev-btn" onclick="toggleEdit()">✏️ EDIT MODE</button>
-        <button class="dev-btn save" onclick="exportCode()">💾 EXPORT CODE</button>
-    </div>
-
+    <div class="edit-fab" onclick="toggleEdit()">✏️ EDIT</div>
     <div class="code-export-box" id="exportBox">
-        <h3 style="color:#fff; margin-bottom:10px;">COPY THIS CODE & PASTE INTO GITHUB:</h3>
-        <textarea id="codeArea" readonly></textarea>
-        <button class="dev-btn" onclick="document.getElementById('exportBox').style.display='none'" style="width: 120px; align-self: flex-end;">CLOSE</button>
+        <h3 style="color:#fff">COPY THIS CODE:</h3>
+        <textarea id="codeArea"></textarea>
+        <button onclick="document.getElementById('exportBox').style.display='none'" style="margin-top:10px; padding:10px;">CLOSE</button>
     </div>
 
     <script>
-        function openOverlay(id) { 
-            document.getElementById(id).classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
-        }
+        function openOverlay(id) { document.getElementById(id).classList.add('active'); }
         
-        function closeOverlay(id) { 
-            document.getElementById(id).classList.remove('active'); 
-            document.body.style.overflow = 'auto'; 
-        }
-
         let isEditable = false;
         function toggleEdit() {
             isEditable = !isEditable;
-            document.querySelectorAll('.editable').forEach(el => {
-                el.contentEditable = isEditable;
-            });
-            document.querySelectorAll('.image-editable').forEach(img => {
-                img.style.cursor = isEditable ? "pointer" : "default";
-                img.style.outline = isEditable ? "2px dashed #38bdf8" : "none";
-                img.onclick = isEditable ? function() {
-                    editImage(this);
-                } : null;
-            });
-            alert(isEditable ? "✏️ EDIT MODE ON\n\n• Click text to edit\n• Click images to change file names" : "❌ EDIT MODE OFF\n\nAll changes saved locally.");
+            document.querySelectorAll('.editable').forEach(el => el.contentEditable = isEditable);
+            document.querySelectorAll('.image-editable').forEach(el => el.style.border = isEditable ? "2px dashed #38bdf8" : "2px dashed #64748b");
+            if(isEditable) alert("Edit Mode ON. Click text or images.");
         }
 
-        function editImage(element) {
-            let currentSrc = element.tagName === 'IMG' ? element.src : '';
-            let filename = currentSrc ? currentSrc.split('/').pop() : '';
-            let url = prompt("Enter Image File Name (e.g., 'robot.jpg', 'lab-photo.png'):", filename);
-            if (url && element.tagName === 'IMG') {
-                element.src = url;
-            } else if (url) {
-                let img = document.createElement('img');
+        function editImage(el) {
+            if(!isEditable) return;
+            let url = prompt("Enter Image File Name (e.g., 'lab.jpg'):");
+            if(url) {
+                let img = el.querySelector('img');
                 img.src = url;
-                img.className = 'visual-img image-editable';
-                img.alt = 'Project Image';
-                img.onclick = function() { if(isEditable) editImage(this); };
-                element.parentNode.replaceChild(img, element);
+                img.style.display = 'block';
+                el.querySelector('span').style.display = 'none';
             }
         }
 
+        // Export logic
         function exportCode() {
-            document.querySelectorAll('.editable').forEach(el => el.removeAttribute('contenteditable'));
-            document.querySelectorAll('.image-editable').forEach(el => {
-                el.style.outline = 'none';
-                el.style.cursor = 'default';
-            });
             let html = document.documentElement.outerHTML;
-            document.getElementById('codeArea').value = '<!DOCTYPE html>\n' + html;
+            document.getElementById('codeArea').value = html;
             document.getElementById('exportBox').style.display = 'flex';
         }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.overlay.active').forEach(overlay => {
-                    overlay.classList.remove('active');
-                });
-                document.body.style.overflow = 'auto';
-            }
-        });
     </script>
 </body>
 </html>
