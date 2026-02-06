@@ -24,7 +24,6 @@
             color: var(--text-main); 
             overflow-x: hidden; 
             line-height: 1.6;
-            /* Blueprint Grid Pattern */
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -95,13 +94,13 @@
             position: relative;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            margin-left: 50px; /* Offset from chain */
+            margin-left: 65px; /* Perfect mesh distance */
         }
 
-        /* The Spinning Teeth (Background) */
+        /* The Spinning Teeth (12-Tooth SVG for robustness) */
         .gear-teeth {
             position: absolute; width: 280px; height: 280px;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' d='M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' stroke='%2338bdf8' stroke-width='1' d='M90 50c0-2.8-1.9-5.2-4.6-5.8l-7.4-1.6c-.8-4.2-2.5-8.2-4.9-11.8l5.2-6.1c1.9-2.2 1.8-5.6-.4-7.7l-5.6-5.6c-2.1-2.1-5.5-2.2-7.7-.4l-6.1 5.2c-3.6-2.4-7.6-4.1-11.8-4.9l-1.6-7.4C44.5 1.9 42.1 0 39.3 0h-8c-2.8 0-5.2 1.9-5.8 4.6l-1.6 7.4c-4.2.8-8.2 2.5-11.8-4.9l6.1 5.2c2.2 1.9 5.6 1.8 7.7-.4l5.6-5.6c2.1-2.1 2.2-5.5.4-7.7l-5.2-6.1c2.4-3.6 4.1-7.6 4.9-11.8l7.4-1.6c2.7-.6 4.6-3 4.6-5.8v-8z'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
             z-index: 0;
             opacity: 0.8;
@@ -109,10 +108,7 @@
         }
 
         /* Rotation Logic (Sync with Chain) */
-        /* Right Side: Chain moves down -> Gear touches left side -> Spins Counter-Clockwise */
         .timeline-row .gear-teeth { animation: spin 12s linear infinite reverse; }
-        
-        /* Left Side: Chain moves down -> Gear touches right side -> Spins Clockwise */
         .timeline-row.reverse .gear-teeth { animation: spin 12s linear infinite; }
 
         /* The Static Hub (Text Content) */
@@ -134,7 +130,7 @@
         }
         .timeline-row .connector-arm { left: -60px; }
         .timeline-row.reverse .connector-arm { right: -60px; left: auto; }
-        .timeline-row.reverse .gear-card-container { margin-left: 0; margin-right: 50px; }
+        .timeline-row.reverse .gear-card-container { margin-left: 0; margin-right: 65px; }
 
         /* Hover Effects */
         .gear-card-container:hover .gear-teeth { opacity: 1; border: 1px dashed var(--accent); border-radius: 50%; }
@@ -203,7 +199,7 @@
             <svg class="profile-gear" viewBox="0 0 100 100">
                 <path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z"/>
             </svg>
-            <img src="profile.jpg.jpeg" alt="Click to Add Photo" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+profile.jpg.jpeg'">
+            <img src="profile.jpg" alt="Click to Add Photo" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/150?text=Upload+Profile.jpg'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
         <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>Building FDA-compliant healthcare solutions.</p>
@@ -447,7 +443,7 @@
                     img.style.cursor = "pointer";
                     img.style.border = "2px dashed #38bdf8";
                     img.onclick = function() {
-                        let url = prompt("Paste the URL of your image (or local file name like 'profile.jpg.jpeg'):", this.src);
+                        let url = prompt("Paste the URL of your image (or local file name like 'profile.jpg'):", this.src);
                         if(url) this.src = url;
                     }
                 } else {
