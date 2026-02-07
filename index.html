@@ -18,6 +18,7 @@
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
+        /* MECHANICAL BACKGROUND */
         body { 
             background-color: var(--bg-color); 
             color: var(--text-main); 
@@ -41,94 +42,132 @@
         .nav-item { color: var(--text-muted); font-size: 0.85rem; cursor: pointer; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; transition: 0.3s; }
         .nav-item:hover { color: #fff; text-shadow: 0 0 8px var(--accent); }
 
-        /* --- HERO SECTION (NEON STYLE) --- */
+        /* --- HERO (UPDATED FOR LARGER IMAGE) --- */
         header {
-            min-height: 100vh;
+            min-height: 100vh; /* Increased height to accommodate larger image */
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 120px 20px 60px 20px;
+            padding: 100px 20px 60px 20px;
         }
         .profile-gear-wrapper { 
-            position: relative; width: 600px; height: 600px; margin-bottom: 40px; 
+            position: relative; 
+            width: 600px; /* Thrice original (200 * 3) */
+            height: 600px; /* Thrice original (200 * 3) */
+            margin-bottom: 40px; 
             display: flex; justify-content: center; align-items: center; 
         }
-        .profile-gear { 
-            position: absolute; width: 100%; height: 100%; 
-            fill: transparent; stroke: var(--accent); stroke-width: 2px;
-            filter: drop-shadow(0 0 12px var(--accent)); opacity: 0.9; z-index: 1;
-        }
-        .profile-img { 
-            width: 420px; height: 420px; border-radius: 50%; object-fit: cover; 
-            border: 3px solid var(--accent); z-index: 2; 
-            box-shadow: 0 0 25px var(--accent), inset 0 0 20px var(--accent); 
-            cursor: pointer; transition: transform 0.3s ease;
-        }
-        .profile-img:hover { transform: scale(1.02); }
+       .profile-gear { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    fill: transparent; /* Makes the gear body empty like the image */
+    stroke: var(--accent); /* Adds the neon outline */
+    stroke-width: 2px;
+    /* This creates the glow effect on the gear teeth themselves */
+    filter: drop-shadow(0 0 8px var(--accent));
+    opacity: 0.9;
+    z-index: 1;
+}
+
+.profile-img { 
+    width: 420px; 
+    height: 420px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    /* Thinner, brighter border to match the inner glow of the image */
+    border: 3px solid var(--accent); 
+    z-index: 2; 
+    /* Tight, intense glow for the circular frame */
+    box-shadow: 
+        0 0 15px var(--accent),
+        inset 0 0 15px var(--accent); /* Adds an inner glow to the photo */
+    cursor: pointer;
+}
+        
         h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; color: transparent; font-weight: 800; }
         .hero-sub { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; }
 
-        /* --- TIMELINE ELEMENTS --- */
+        /* --- THE CHAIN TIMELINE --- */
         .timeline-section { padding: 80px 20px; max-width: 1300px; margin: 0 auto; position: relative; }
         .chain-drive {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 16px; transform: translateX(-50%);
-            background-image: linear-gradient(#334155 50%, transparent 50%); background-size: 100% 20px;
-            z-index: 0; border-left: 2px solid #1e293b; border-right: 2px solid #1e293b;
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 16px;
+            transform: translateX(-50%);
+            background-image: linear-gradient(#334155 50%, transparent 50%);
+            background-size: 100% 20px;
+            z-index: 0;
+            border-left: 2px solid #1e293b; border-right: 2px solid #1e293b;
             animation: driveChain 2s linear infinite;
         }
         .timeline-row { display: flex; justify-content: center; align-items: center; margin-bottom: 100px; position: relative; z-index: 1; }
         .sprocket-hub {
-            position: absolute; left: 50%; transform: translateX(-50%); width: 60px; height: 60px;
-            background: var(--bg-color); border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 60px;
+            background: var(--bg-color); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
             border: 2px solid #334155; box-shadow: 0 0 20px #000; z-index: 2;
         }
-        .sprocket-svg { width: 40px; height: 40px; fill: var(--text-muted); animation: spin 4s linear infinite reverse; }
+        .sprocket-svg { width: 40px; height: 40px; fill: var(--text-muted); }
+        .timeline-row .sprocket-svg { animation: spin 4s linear infinite reverse; } 
+        .timeline-row.reverse .sprocket-svg { animation: spin 4s linear infinite; }
 
         .gear-card-container { width: 40%; height: 300px; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-left: 50px; }
         .gear-teeth {
             position: absolute; width: 280px; height: 280px;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e293b' d='M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat; opacity: 0.8; transition: opacity 0.3s; animation: spin 12s linear infinite reverse;
+            background-size: contain; background-repeat: no-repeat;
+            z-index: 0; opacity: 0.8; transition: opacity 0.3s;
         }
+        .timeline-row .gear-teeth { animation: spin 12s linear infinite reverse; }
+        .timeline-row.reverse .gear-teeth { animation: spin 12s linear infinite; }
+
         .gear-hub {
             position: relative; z-index: 1; width: 180px; height: 180px; background: rgba(15, 23, 42, 0.95);
-            border: 2px solid var(--accent); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); transition: 0.3s;
+            border: 2px solid var(--accent); border-radius: 50%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            padding: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); transition: transform 0.3s;
         }
-        .gear-card-container:hover .gear-hub { transform: scale(1.1); box-shadow: 0 0 30px var(--accent-glow); }
+        .connector-arm { position: absolute; height: 10px; width: 60px; background: #475569; top: 50%; transform: translateY(-50%); z-index: -1; }
+        .timeline-row .connector-arm { left: -60px; }
+        .timeline-row.reverse .connector-arm { right: -60px; left: auto; }
+        .timeline-row.reverse .gear-card-container { margin-left: 0; margin-right: 50px; }
+
+        .gear-card-container:hover .gear-teeth { opacity: 1; border: 1px dashed var(--accent); border-radius: 50%; }
+        .gear-card-container:hover .gear-hub { transform: scale(1.1); box-shadow: 0 0 30px var(--accent-glow); background: #0f172a; }
+        .gear-title { font-size: 1.1rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
+        .gear-cta { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
 
         .narrative-text { width: 35%; color: var(--text-muted); padding: 0 20px; font-size: 1.1rem; text-align: right; }
         .timeline-row.reverse { flex-direction: row-reverse; }
         .timeline-row.reverse .narrative-text { text-align: left; }
-        .timeline-row.reverse .gear-card-container { margin-left: 0; margin-right: 50px; }
-        .timeline-row.reverse .gear-teeth { animation: spin 12s linear infinite; }
 
-        /* --- OVERLAY & 3D CARD STYLES --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 17, 32, 0.98); z-index: 2000; display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s; padding-bottom: 50px; }
+        /* --- OVERLAYS --- */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 17, 32, 0.98); z-index: 2000; display: none; overflow-y: auto; opacity: 0; transition: opacity 0.4s; }
         .overlay.active { display: block; opacity: 1; }
-        .overlay-content { max-width: 1000px; margin: 80px auto; padding: 20px; animation: slideUp 0.5s ease; }
+        .overlay-content { max-width: 900px; margin: 80px auto; padding: 40px 20px; animation: slideUp 0.5s ease; }
         .close-btn { position: fixed; top: 30px; right: 40px; font-size: 3rem; color: var(--text-muted); cursor: pointer; z-index: 2001; }
-
-        .btech-card {
-            background: #1e293b; padding: 25px; border-radius: 12px; border-left: 4px solid var(--accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: 0.3s; position: relative;
-        }
-        .btech-card:hover { transform: translateY(-10px) rotateX(2deg); box-shadow: 0 20px 40px rgba(56, 189, 248, 0.15); }
-
-        .master-module { background: #1e293b; border: 1px solid #334155; border-radius: 8px; overflow: hidden; transition: 0.3s; }
-        .master-module:hover { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
-        .module-header { background: #334155; padding: 12px 20px; font-weight: 800; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
-        .module-body { padding: 20px; }
-        .tech-tag { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid rgba(56, 189, 248, 0.3); margin-right: 5px; }
-        .takeaway { border-left: 3px solid var(--accent); padding-left: 15px; margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
-
-        .visual-placeholder { width: 100%; background: #1e293b; border: 1px dashed #475569; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .visual-img { width: 100%; height: 100%; object-fit: cover; }
+        .tab-nav { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #334155; }
+        .tab-btn { padding: 10px 20px; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 4px solid transparent; }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-panel { display: none; animation: fadeIn 0.5s; }
+        .tab-panel.active { display: block; }
+        .visual-placeholder { width: 100%; height: 300px; background: #1e293b; border: 1px dashed #475569; display: flex; align-items: center; justify-content: center; color: #64748b; margin-top: 20px; cursor: pointer; position: relative;}
+        .visual-placeholder::after { content: 'Click to Add Image URL'; position: absolute; bottom: 10px; right: 10px; font-size: 0.8rem; opacity: 0.5;}
 
         @keyframes driveChain { from { background-position: 0 0; } to { background-position: 0 20px; } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .edit-fab { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 5000; }
+        .edit-fab { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; z-index: 5000; box-shadow: 0 0 20px var(--accent-glow); }
         .editable[contenteditable="true"] { border: 1px dashed var(--accent); background: rgba(56,189,248,0.1); }
+
+        @media (max-width: 900px) {
+            .chain-drive, .sprocket-hub, .connector-arm { display: none; }
+            .timeline-row, .timeline-row.reverse { flex-direction: column; margin-left: 0; margin-bottom: 60px; }
+            .gear-card-container { width: 100%; margin: 0; height: 250px; }
+            .narrative-text { width: 100%; text-align: center; margin-bottom: 20px; }
+            .profile-gear-wrapper { width: 300px; height: 300px; } /* Scale down for mobile */
+            .profile-img { width: 220px; height: 220px; }
+        }
     </style>
 </head>
 <body>
@@ -140,15 +179,16 @@
             <div class="nav-item" onclick="openOverlay('overlay-masters')">Masters</div>
             <div class="nav-item" onclick="openOverlay('overlay-exp')">Experience</div>
             <div class="nav-item" onclick="openOverlay('overlay-projects')">Projects</div>
+            <div class="nav-item" onclick="openOverlay('overlay-hobbies')">Hobbies</div>
         </div>
     </nav>
 
     <header>
         <div class="profile-gear-wrapper">
             <svg class="profile-gear" viewBox="0 0 100 100">
-                <path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z" />
+                <path d="M50 0 L60 10 L70 5 L75 15 L85 15 L85 25 L95 30 L90 40 L100 50 L90 60 L95 70 L85 75 L85 85 L75 85 L70 95 L60 90 L50 100 L40 90 L30 95 L25 85 L15 85 L15 75 L5 70 L10 60 L0 50 L10 40 L5 30 L15 25 L15 15 L25 15 L30 5 L40 10 Z"/>
             </svg>
-            <img src="profile.jpg" alt="Profile" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/420/0f172a/38bdf8?text=Jayanth+Gowda'">
+            <img src="profile.jpg" alt="Profile" class="profile-img image-editable" onerror="this.src='https://via.placeholder.com/420?text=Upload+Profile.jpg'">
         </div>
         <h1 class="editable">Jayanth Gowda</h1>
         <p class="hero-sub editable">Graduate Mechanical Engineer (M.S.) | Medical Device Design<br>Building FDA-compliant healthcare solutions.</p>
@@ -156,56 +196,313 @@
 
     <div class="timeline-section">
         <div class="chain-drive"></div>
-        
+
         <div class="timeline-row">
-            <div class="narrative-text editable">Foundation in Mechanical Engineering: analyzing forces, stresses, and manufacturing processes to turn theory into real systems.</div>
-            <div class="sprocket-hub"><svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
+            <div class="narrative-text editable">
+                I started in science to understand how things work. I chose <strong>Mechanical Engineering</strong> because it turns curiosity into real, tangible systems you can design and build.
+            </div>
+            <div class="sprocket-hub">
+                <svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
+            </div>
             <div class="gear-card-container" onclick="openOverlay('overlay-btech')">
+                <div class="connector-arm"></div>
                 <div class="gear-teeth"></div>
-                <div class="gear-hub"><div class="gear-title">Bachelors Foundation</div><div style="color:var(--accent); font-size: 0.8rem;">INSPECT</div></div>
+                <div class="gear-hub">
+                    <div class="gear-title editable">Bachelors Foundation</div>
+                    <div class="gear-cta">Inspect</div>
+                </div>
             </div>
         </div>
 
         <div class="timeline-row reverse">
-            <div class="narrative-text editable">Transitioning to Medical Device Design at Stevens—where engineering meets strict FDA regulation and manufacturability.</div>
-            <div class="sprocket-hub"><svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg></div>
+            <div class="narrative-text editable">
+                The turning point was a hospital visit. Watching a CT Scanner in operation, I realized modern surgery relies on mechanical precision. I pivoted to <strong>Medical Devices</strong> at Stevens.
+            </div>
+            <div class="sprocket-hub">
+                <svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
+            </div>
             <div class="gear-card-container" onclick="openOverlay('overlay-masters')">
+                <div class="connector-arm"></div>
                 <div class="gear-teeth"></div>
-                <div class="gear-hub"><div class="gear-title">Masters at Stevens</div><div style="color:var(--accent); font-size: 0.8rem;">INSPECT</div></div>
+                <div class="gear-hub">
+                    <div class="gear-title editable">Masters at Stevens</div>
+                    <div class="gear-cta">Inspect</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-row">
+            <div class="narrative-text editable">
+                Engineering isn't finished until it works on the shop floor. From Toyota's assembly lines to Stevens' Robotics Labs, I've focused on manufacturability, reliability, and validation.
+            </div>
+            <div class="sprocket-hub">
+                <svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
+            </div>
+            <div class="gear-card-container" onclick="openOverlay('overlay-exp')">
+                <div class="connector-arm"></div>
+                <div class="gear-teeth"></div>
+                <div class="gear-hub">
+                    <div class="gear-title editable">Experience</div>
+                    <div class="gear-cta">Inspect</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-row reverse">
+            <div class="narrative-text editable">
+                Innovation requires optimization. Whether optimizing 3D printing parameters for an Exoskeleton or designing custom Lab Fixtures, I focus on improving efficiency.
+            </div>
+            <div class="sprocket-hub">
+                <svg class="sprocket-svg" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,13L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
+            </div>
+            <div class="gear-card-container" onclick="openOverlay('overlay-projects')">
+                <div class="connector-arm"></div>
+                <div class="gear-teeth"></div>
+                <div class="gear-hub">
+                    <div class="gear-title editable">Projects</div>
+                    <div class="gear-cta">Inspect</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="overlay-btech" class="overlay">
+<div id="overlay-btech" class="overlay">
         <div class="close-btn" onclick="closeOverlay('overlay-btech')">×</div>
         <div class="overlay-content">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 5px;">B.Tech in Mechanical Engineering</h2>
-            <p style="color:var(--accent); text-align: center; font-weight: bold; margin-bottom: 40px;">PRESIDENCY UNIVERSITY | 2019 - 2023</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
-                <div class="btech-card editable"><h3>1. Engineering Mechanics & Design</h3><p>• Statics & Dynamics • Strength of Materials • Machine Design</p></div>
-                <div class="btech-card editable"><h3>2. Manufacturing & Materials</h3><p>• Manufacturing Processes • Materials Science • Metrology</p></div>
-                <div class="btech-card editable"><h3>3. Thermal & Fluid Systems</h3><p>• Thermodynamics • Heat Transfer • Fluid Mechanics</p></div>
-                <div class="btech-card editable"><h3>4. Design & Analysis Tools</h3><p>• CAD / Engineering Drawing • Numerical Methods</p></div>
-            </div>
-            <div style="margin-top: 50px; border-top: 2px solid #334155; padding-top: 40px;">
-                <div class="visual-placeholder image-editable" style="height: 450px;">
-                    <img src="graduation.jpg" class="visual-img" onerror="this.src='https://via.placeholder.com/1200x500?text=Upload+Graduation+Photo'">
+            <h2 class="editable" style="text-align: center; font-size: 2.5rem; margin-bottom: 5px;">B.Tech in Mechanical Engineering</h2>
+            <p class="editable" style="color:var(--accent); text-align: center; font-weight: bold; margin-bottom: 40px; letter-spacing: 2px;">PRESIDENCY UNIVERSITY | 2019 - 2023</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-bottom: 50px;">
+                
+                <div class="btech-card editable">
+                    <h3 style="color:var(--accent); margin-bottom:10px; border-bottom:1px solid #334155;">1. Engineering Mechanics & Design</h3>
+                    <p style="font-size: 0.9rem; color: #fff; margin-bottom: 8px;">• Statics & Dynamics • Strength of Materials • Machine Design</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Trained to analyze forces, stresses, and motion. These form the backbone of safe, reliable precision systems.</p>
                 </div>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;">Bachelor of Technology in Mechanical Engineering — Presidency University</p>
+
+                <div class="btech-card editable">
+                    <h3 style="color:var(--accent); margin-bottom:10px; border-bottom:1px solid #334155;">2. Manufacturing & Materials</h3>
+                    <p style="font-size: 0.9rem; color: #fff; margin-bottom: 8px;">• Manufacturing Processes • Materials Science • Metrology</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Focused on how design choices impact manufacturability and tolerances—critical for CAD-to-production transitions.</p>
+                </div>
+
+                <div class="btech-card editable">
+                    <h3 style="color:var(--accent); margin-bottom:10px; border-bottom:1px solid #334155;">3. Thermal & Fluid Systems</h3>
+                    <p style="font-size: 0.9rem; color: #fff; margin-bottom: 8px;">• Thermodynamics • Heat Transfer • Fluid Mechanics</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Analysis of energy transfer and flow systems, supporting my expertise in cooling systems and imaging hardware.</p>
+                </div>
+
+                <div class="btech-card editable">
+                    <h3 style="color:var(--accent); margin-bottom:10px; border-bottom:1px solid #334155;">4. Design & Analysis Tools</h3>
+                    <p style="font-size: 0.9rem; color: #fff; margin-bottom: 8px;">• CAD / Engineering Drawing • Numerical Methods</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Developed structured problem-solving and visualization applied in CAD modeling and validation workflows.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 30px; background: rgba(56, 189, 248, 0.05); padding: 30px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 50px;">
+                <div style="flex: 1;" class="editable">
+                    <h3 style="color:var(--accent); margin-bottom:15px;">Technical Competencies</h3>
+                    <ul style="list-style: none; font-size: 0.9rem; color: var(--text-muted);">
+                        <li>⚙️ Engineering Drawing Interpretation</li>
+                        <li>⚙️ Material Selection Reasoning</li>
+                        <li>⚙️ Manufacturing Process Awareness</li>
+                        <li>⚙️ Structured Analytical Problem-Solving</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; border-left: 1px solid #334155; padding-left: 30px;" class="editable">
+                    <h3 style="color:var(--accent); margin-bottom:15px;">Academic Focus</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Applied theoretical analysis to practical mechanical systems through lab work and design-based coursework projects.</p>
+                </div>
+            </div>
+
+            <div style="width: 100%; border-top: 2px solid #334155; padding-top: 40px;">
+                <div class="visual-placeholder image-editable" style="height: 450px; border-radius: 10px; overflow: hidden; background: #000;">
+                    <img src="graduation.jpg" class="visual-img" onerror="this.src='https://via.placeholder.com/1200x500?text=Upload+Graduation+Cohort+Photo'">
+                </div>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase;">
+                    Bachelor of Technology in Mechanical Engineering — Presidency University
+                </p>
             </div>
         </div>
     </div>
 
-    <div id="overlay-masters" class="overlay">
-        <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
-        <div class="overlay-content">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 5px;">M.S. in Mechanical Engineering</h2>
-            <p style="color:var(--accent); text-align: center; font-weight: bold; margin-bottom: 40px;">STEVENS INSTITUTE OF TECHNOLOGY</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
-                <div class="master-module"><div class="module-header">DFM / DFA</div><div class="module-body"><p>Tolerance stack-up and process selection.</p><span class="tech-tag">DFMA</span><span class="tech-tag">Analysis</span><blockquote class="takeaway">"Designing for assembly efficiency and scale."</blockquote></div></div>
-                <div class="master-module"><div class="module-header">Medical Device Design</div><div class="module-body"><p>Risk Management (FMEA) and FDA Pathways.</p><span class="tech-tag">V&V</span><span class="tech-tag">ISO 13485</span><blockquote class="takeaway">"Shaped thinking on reliability and safety."</blockquote></div></div>
-                <div class="master-module"><div class="module-header">Quality Systems</div><div class="module-body"><p>ISO 13485 and FDA 21 CFR 820.</p><span class="tech-tag">CAPA</span><span class="tech-tag">RCA</span><blockquote class="takeaway">"Engineering within a Quality Management System."</blockquote></div></div>
-                <div class="master-module"><div class="module-header">Applied Machine Learning</div><div class="module-body"><p>Data analysis for predictive insights.</p><span class="tech-tag">Regression</span><span class="tech-tag">Insights</span><blockquote class="takeaway">"Identifying patterns in manufacturing data."</blockquote></div></div>
+    <style>
+        .btech-card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .btech-card:hover {
+            transform: translateY(-10px) rotateX(2deg);
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.15);
+            background: #232f45;
+        }
+    </style>
+        </div>
+    </div>
+
+  <div id="overlay-masters" class="overlay">
+    <div class="close-btn" onclick="closeOverlay('overlay-masters')">×</div>
+    <div class="overlay-content">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 5px;">Master of Science in Mechanical Engineering</h2>
+        <p style="color:var(--accent); text-align: center; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;">STEVENS INSTITUTE OF TECHNOLOGY</p>
+        
+        <div style="background: rgba(56, 189, 248, 0.05); padding: 20px; border-radius: 10px; border: 1px solid #334155; margin-bottom: 40px; text-align: center;">
+            <p style="font-style: italic; color: var(--text-muted); max-width: 800px; margin: 0 auto;">
+                "This program helped me transition from foundational mechanical engineering into regulated, product-driven engineering, where design decisions must be manufacturable, testable, traceable, and compliant."
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+            
+            <div class="master-module">
+                <div class="module-header">DFM / DFA: Design for Manufacturability</div>
+                <div class="module-body">
+                    <p>Focus: Tolerance stack-up, process selection (machining, molding, additive), and part count reduction.</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">DFMA</span> <span class="tech-tag">Tolerance Analysis</span> <span class="tech-tag">Part Consolidation</span>
+                    </div>
+                    <blockquote class="takeaway">"I learned to design for assembly efficiency and scale, minimizing cost and variation."</blockquote>
+                </div>
+            </div>
+
+            <div class="master-module">
+                <div class="module-header">Medical Device Design & Technology</div>
+                <div class="module-body">
+                    <p>Focus: Design Controls, V&V, Risk Management (FMEA), and FDA 510(k) pathways.</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">Design Controls</span> <span class="tech-tag">V&V</span> <span class="tech-tag">FMEA</span> <span class="tech-tag">FDA DHF</span>
+                    </div>
+                    <blockquote class="takeaway">"Shaped my thinking on reliability and safety within a documented regulatory framework."</blockquote>
+                </div>
+            </div>
+
+            <div class="master-module">
+                <div class="module-header">Medical Devices for Manufacturability</div>
+                <div class="module-body">
+                    <p>Focus: Scaling from prototype to production, process validation, and design transfer.</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">Design Transfer</span> <span class="tech-tag">Process Validation</span> <span class="tech-tag">Scaling</span>
+                    </div>
+                    <blockquote class="takeaway">"Reinforced why early manufacturability thinking prevents device failures during scale-up."</blockquote>
+                </div>
+            </div>
+
+            <div class="master-module">
+                <div class="module-header">Quality in Life Sciences Manufacturing</div>
+                <div class="module-body">
+                    <p>Focus: ISO 13485, FDA 21 CFR 820, CAPA systems, and Root Cause Analysis (RCA).</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">ISO 13485</span> <span class="tech-tag">21 CFR 820</span> <span class="tech-tag">CAPA</span> <span class="tech-tag">RCA</span>
+                    </div>
+                    <blockquote class="takeaway">"Taught me how engineering decisions exist within a Quality Management System."</blockquote>
+                </div>
+            </div>
+
+            <div class="master-module">
+                <div class="module-header">Applied Machine Learning (Engineering)</div>
+                <div class="module-body">
+                    <p>Focus: Data preprocessing, regression, and classification for engineering data interpretation.</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">Regression</span> <span class="tech-tag">Data Analysis</span> <span class="tech-tag">Predictive Insights</span>
+                    </div>
+                    <blockquote class="takeaway">"Leveraging data to identify patterns and potential failure modes in manufacturing."</blockquote>
+                </div>
+            </div>
+
+            <div class="master-module">
+                <div class="module-header">Project Management</div>
+                <div class="module-body">
+                    <p>Focus: WBS, risk allocation, cross-functional coordination, and timeline control.</p>
+                    <div class="tag-container">
+                        <span class="tech-tag">WBS</span> <span class="tech-tag">Resource Allocation</span> <span class="tech-tag">Project Lifecycle</span>
+                    </div>
+                    <blockquote class="takeaway">"Strengthened my ability to manage engineering work as a balanced system of scope and cost."</blockquote>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; padding: 40px; border: 2px dashed var(--accent); border-radius: 15px;">
+            <h3 style="color:var(--accent); text-align: center; margin-bottom: 20px;">The Integrated Engineering Mindset</h3>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; text-align: center;">
+                <div style="flex: 1; min-width: 200px;">
+                    <p style="font-weight: bold; color: #fff;">Manufacturability</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Designing for reality, not just CAD.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <p style="font-weight: bold; color: #fff;">Compliance</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Mastery of ISO 13485 & FDA regs.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <p style="font-weight: bold; color: #fff;">Risk Management</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Proactive FMEA and CAPA thinking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="visual-placeholder image-editable" style="height: 250px;">
+                <img src="dfm-comparison.jpg" class="visual-img" onerror="this.src='https://via.placeholder.com/500x250?text=DFMA+Comparison+Visual'">
+            </div>
+            <div class="visual-placeholder image-editable" style="height: 250px;">
+                <img src="quality-standards.jpg" class="visual-img" onerror="this.src='https://via.placeholder.com/500x250?text=ISO+13485+/+FDA+Standards'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .master-module {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+    .master-module:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .module-header {
+        background: #334155;
+        padding: 12px 20px;
+        font-weight: 800;
+        color: var(--accent);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .module-body {
+        padding: 20px;
+    }
+    .tag-container {
+        margin: 15px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .tech-tag {
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--accent);
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .takeaway {
+        border-left: 3px solid var(--accent);
+        padding-left: 15px;
+        margin-top: 15px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-style: italic;
+    }
+</style>
+                </ul>
             </div>
         </div>
     </div>
@@ -215,6 +512,15 @@
     <script>
         function openOverlay(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeOverlay(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+        
+        function switchTab(panelId, btn) {
+            let parent = btn.parentElement.parentElement;
+            parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(panelId).classList.add('active');
+        }
+
         let isEditable = false;
         function toggleEdit() {
             isEditable = !isEditable;
@@ -225,7 +531,9 @@
                         let url = prompt("Paste Image URL:", this.src);
                         if(url) this.src = url;
                     }
-                } else { img.onclick = null; }
+                } else {
+                    img.onclick = null;
+                }
             });
             document.querySelector('.edit-fab').textContent = isEditable ? "💾 DONE" : "✏️ EDIT PAGE";
         }
